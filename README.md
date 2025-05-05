@@ -1,4 +1,4 @@
-# ducky-cookbook
+## DuckyAI Cookbook
 Examples and guides for using the Ducky.ai API
 
 ✨ Navigate at [docs.ducky.ai](https://docs.ducky.ai/docs/getting-started#/)
