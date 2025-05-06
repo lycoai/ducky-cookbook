@@ -45,8 +45,8 @@ We integrate with the **OpenAI API** to generate conversational responses. The A
 Clone the repository and install dependencies:
 
 ```bash
-git clone https://github.com/your-org/ducky-copilot.git
-cd ducky-copilot/backend
+git clone https://github.com/lycoai/ducky-cookbook.git
+cd ducky-cookbook/ducky-copilot/backend
 npm install 
 # or
 yarn install

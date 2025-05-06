@@ -5,8 +5,8 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 Clone the repository and install dependencies:
 
 ```bash
-git clone https://github.com/your-org/ducky-copilot.git
-cd ducky-copilot/frontend
+git clone https://github.com/lycoai/ducky-cookbook.git
+cd ducky-cookbook/ducky-copilot/frontend
 npm install 
 # or
 yarn install
