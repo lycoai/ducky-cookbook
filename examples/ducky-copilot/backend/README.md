@@ -46,7 +46,7 @@ Clone the repository and install dependencies:
 
 ```bash
 git clone https://github.com/lycoai/ducky-cookbook.git
-cd ducky-cookbook/ducky-copilot/backend
+cd ducky-cookbook/examples/ducky-copilot/backend
 npm install 
 # or
 yarn install
