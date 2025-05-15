@@ -1,4 +1,4 @@
-import { MagnifyingGlassIcon } from '@heroicons/react/24/outline'
+import { CommandLineIcon } from '@heroicons/react/24/outline'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
@@ -159,7 +159,7 @@ export function Sidebar({
           {/* App Title */}
           <div className="mb-8 flex items-center space-x-3">
             <div className="p-2 bg-slate-800 rounded-lg">
-              <MagnifyingGlassIcon className="h-6 w-6 text-slate-300" />
+              <CommandLineIcon className="h-6 w-6 text-slate-300" />
             </div>
             <h1 className="text-xl font-mono text-slate-100 tracking-tight">
               Ducky Copilot
@@ -169,10 +169,11 @@ export function Sidebar({
           {/* URL Input Section */}
           <div className="mb-8">
             <h3 className="text-lg font-mono text-slate-300 mb-4">
-              Analyze repository
+              Load repository
             </h3>
             <p className="text-slate-400 mb-4 leading-relaxed">
-              Enter a URL from a public repository to analyze
+              Enter a URL from a public repository and we&apos;ll fetch and
+              prepare the code so you can start asking questions.
             </p>
 
             {/* Error Display */}
@@ -217,7 +218,7 @@ export function Sidebar({
                 </div>
                 <button
                   type="submit"
-                  // disabled={isProcessing}
+                  disabled={isProcessing}
                   className="w-full bg-blue-600 text-white py-2.5 px-4 rounded-lg font-medium
                                                hover:bg-blue-500 transition-colors
                                                disabled:opacity-50 disabled:cursor-not-allowed"
@@ -247,7 +248,7 @@ export function Sidebar({
                         <span>Processing...</span>
                       </>
                     ) : (
-                      'Analyze'
+                      'Start with this Repo'
                     )}
                   </span>
                 </button>
@@ -258,7 +259,7 @@ export function Sidebar({
           {/* Recent Documents Section */}
           <div>
             <h3 className="text-lg font-mono text-slate-300 mb-4">
-              Recent Documents
+              Recent Repositoriess
             </h3>
 
             {isLoadingIndexes ? (

@@ -12,13 +12,7 @@ interface ChatMessage {
 }
 
 export function useChat({ indexName }: UseChatProps) {
-  const [messages, setMessages] = useState<ChatMessage[]>([
-    {
-      id: Date.now().toString(),
-      type: 'assistant',
-      content: `Hello! I'm Ducky, your AI assistant. How can I help you today?`,
-    },
-  ])
+  const [messages, setMessages] = useState<ChatMessage[]>([])
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 

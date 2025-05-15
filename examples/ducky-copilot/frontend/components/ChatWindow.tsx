@@ -65,12 +65,14 @@ export function ChatWindow({ selectedIndex }: ChatWindowProps) {
     questionForm.reset()
   }
 
+  console.log('lcf messages', messages)
+
   return (
     <div className="flex-1 overflow-hidden bg-white flex flex-col">
       {/* Chat Messages Area */}
       <div className="flex-1 overflow-y-auto">
         <div className="max-w-4xl mx-auto px-4 py-6">
-          {messages.length === 0 ? (
+          {!messages.length ? (
             // Welcome message - Only shown when no messages exist
             <div className="h-full flex items-center justify-center min-h-[400px]">
               <div className="text-center space-y-4 max-w-lg">
@@ -78,12 +80,11 @@ export function ChatWindow({ selectedIndex }: ChatWindowProps) {
                   <MagnifyingGlassIcon className="h-6 w-6 text-blue-600" />
                 </div>
                 <h3 className="text-lg font-semibold text-gray-900">
-                  Analyze {selectedIndex}&apos;s repository
+                  Explore {selectedIndex} repository
                 </h3>
                 <p className="text-gray-500 text-sm">
                   Ask questions about the repository. I can help you understand
-                  understand implementation details, code structure, and
-                  functionality.
+                  implementation details, code structure, and functionality.
                 </p>
               </div>
             </div>
