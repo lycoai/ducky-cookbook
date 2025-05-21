@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 })
 
 export const metadata: Metadata = {
-  title: 'Ducky Copilot',
-  description: 'Your AI Copilot',
+  title: 'CodeScout',
+  description: 'Scouts the repo to find the right answers',
   icons: {
     icon: '/favicon.svg',
   },

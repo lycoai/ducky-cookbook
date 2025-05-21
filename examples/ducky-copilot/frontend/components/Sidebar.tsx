@@ -162,7 +162,7 @@ export function Sidebar({
               <CommandLineIcon className="h-6 w-6 text-slate-300" />
             </div>
             <h1 className="text-xl font-mono text-slate-100 tracking-tight">
-              Ducky Copilot
+              CodeScout
             </h1>
           </div>
 
