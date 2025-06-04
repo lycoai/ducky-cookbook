@@ -74,12 +74,13 @@ export function RecentDocuments({
                 >
                   {index.index_name === 'tiktok-com' && (
                     <span
-                      className="mr-2 inline-block rounded-full bg-red-500 px-[9px] py-[4px] align-middle text-xs font-semibold text-white"
+                      className="mr-2 inline-block rounded-full bg-[#FF545A] px-[9px] py-[4px] align-middle text-xs font-semibold text-white"
                       style={{ verticalAlign: 'middle' }}
                     >
                       bad
                     </span>
                   )}
+
                   {index.index_name}
                 </button>
               ))}
