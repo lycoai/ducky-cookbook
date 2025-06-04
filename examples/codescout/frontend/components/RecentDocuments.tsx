@@ -19,24 +19,13 @@ export function RecentDocuments({
 }: Readonly<RecentDocumentsProps>) {
   return (
     <div className="flex h-full flex-col">
-      {/* Built with Ducky link at the top for md+ */}
-      <div className="hidden justify-end md:flex">
-        <a
-          href="https://www.ducky.ai"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-sm text-[#8E9499] transition-colors duration-[240ms] hover:text-white"
-        >
-          Built with Ducky
-        </a>
-      </div>
       {/* Recent Documents List */}
       <div className="flex flex-1 flex-col overflow-y-auto">
         <div className="flex flex-1 flex-col md:justify-end">
           {isLoadingIndexes ? (
             <div className="flex items-center justify-center py-8">
               <svg
-                className="h-5 w-5 animate-spin text-blue-500"
+                className="h-5 w-5 animate-spin text-[var(--blue)]"
                 viewBox="0 0 24 24"
               >
                 <circle
@@ -56,9 +45,9 @@ export function RecentDocuments({
               </svg>
             </div>
           ) : indexError ? (
-            <div className="p-4 text-red-400">{indexError}</div>
+            <div className="p-4 text-[var(--red)]">{indexError}</div>
           ) : indexes.length === 0 ? (
-            <div className="py-4 text-center text-[#8E9499]">
+            <div className="py-4 text-center text-[var(--gray)]">
               No recent documents
             </div>
           ) : (
@@ -70,11 +59,11 @@ export function RecentDocuments({
                     setSelectedIndex(index.index_name)
                     setIsSubmitted(true)
                   }}
-                  className={`cursor-pointer text-left text-[18px] leading-[145%] font-medium transition-colors duration-[240ms] md:text-right ${selectedIndex === index.index_name ? 'text-white' : 'text-[#8E9499] hover:text-white'}`}
+                  className={`cursor-pointer text-left text-[18px] leading-[145%] font-medium transition-colors duration-[240ms] md:text-right ${selectedIndex === index.index_name ? 'text-white' : 'text-[var(--gray)] hover:text-white'}`}
                 >
                   {index.index_name === 'tiktok-com' && (
                     <span
-                      className="mr-2 inline-block rounded-full bg-[#FF545A] px-[9px] py-[4px] align-middle text-xs font-semibold text-white"
+                      className="mr-2 inline-block rounded-full bg-[var(--red)] px-[9px] py-[4px] align-middle text-xs font-semibold text-white"
                       style={{ verticalAlign: 'middle' }}
                     >
                       bad
@@ -87,18 +76,6 @@ export function RecentDocuments({
             </div>
           )}
         </div>
-      </div>
-
-      {/* Built with Ducky link at the bottom for mobile only */}
-      <div className="mt-4 flex justify-center md:hidden">
-        <a
-          href="https://www.ducky.ai"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-sm text-[#8E9499] transition-colors duration-[240ms] hover:text-white"
-        >
-          Built with Ducky
-        </a>
       </div>
     </div>
   )
