@@ -1,5 +1,5 @@
 import { generateResponse } from '@/services'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 interface UseChatProps {
   indexName: string
@@ -57,6 +57,12 @@ export function useChat({ indexName }: UseChatProps) {
       setIsLoading(false)
     }
   }
+
+  // Reset messages when indexName changes
+  useEffect(() => {
+    setMessages([])
+    setError(null)
+  }, [indexName])
 
   return {
     messages,
