@@ -42,8 +42,8 @@ export default function Home() {
   }, [allIndexes, selectedIndex])
 
   return (
-    <main className="relative min-h-screen overflow-hidden bg-black">
-      <div className="pt-4 flex justify-center md:hidden">
+    <main className="relative h-screen overflow-hidden bg-black">
+      <div className="mt-4 flex justify-center md:hidden">
         <a
           href="https://www.ducky.ai"
           target="_blank"
@@ -53,6 +53,23 @@ export default function Home() {
           Built with Ducky
         </a>
       </div>
+
+      {/* Show indexes on mobile as horizontal scroll */}
+      <div className="flex md:hidden flex-row gap-4 p-4 overflow-x-scroll">
+        {allIndexes.map((index) => (
+          <div
+            onClick={() => {
+              setSelectedIndex(index.index_name)
+              setIsSubmitted(true)
+            }}
+            key={index.index_name}
+            className={`min-w-fit ${selectedIndex === index.index_name ? 'text-[var(--blue)]' : 'text-[var(--gray)]'}`}
+          >
+            {index.index_name}
+          </div>
+        ))}
+      </div>
+
       {/* Main Content */}
       <div className="flex h-screen p-[40px]">
         {/* Full-height left bar - Hidden on mobile */}
