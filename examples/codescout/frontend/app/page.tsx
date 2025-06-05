@@ -45,8 +45,8 @@ export default function Home() {
   }, [allIndexes, selectedIndex])
 
   return (
-    <main className="relative h-screen overflow-hidden bg-black flex flex-col">
-      <div className="mt-2 flex justify-center md:hidden">
+    <main className="relative h-[100dvh] overflow-hidden bg-black flex flex-col">
+      <div className="safe-area-inset-top mt-2 flex justify-center md:hidden">
         <a
           href="https://www.ducky.ai"
           target="_blank"
@@ -56,8 +56,8 @@ export default function Home() {
           Built with Ducky
         </a>
       </div>
-
       {/* Show indexes on mobile as horizontal scroll */}
+
       <div className="relative md:hidden px-4 py-2">
         {/* Fixed right-side blur overlay */}
         <div className="pointer-events-none absolute right-0 top-2 bottom-2 w-12 z-10 bg-[linear-gradient(270deg,_rgba(0,0,0,0.7)_0%,_rgba(0,0,0,0)_100%)] backdrop-blur-[2.5px]" />
@@ -82,9 +82,11 @@ export default function Home() {
           ))}
         </div>
       </div>
-
       {/* Main Content */}
-      <div id="main-content" className="flex flex-1 p-6 overflow-y-auto">
+      <div
+        id="main-content"
+        className="flex flex-1 p-6 overflow-y-auto safe-area-inset-bottom"
+      >
         {/* Left Recent Documents - Hidden on mobile */}
         <div className="hidden md:block">
           <RecentDocuments
@@ -121,7 +123,7 @@ export default function Home() {
       <AnimatePresence>
         {showAnalyzeBox && (
           <motion.div
-            className="absolute flex flex-shrink-0 flex-col justify-end md:hidden bottom-0 w-full"
+            className="absolute flex flex-shrink-0 flex-col justify-end md:hidden bottom-0 w-full safe-area-inset-bottom"
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 50 }}
