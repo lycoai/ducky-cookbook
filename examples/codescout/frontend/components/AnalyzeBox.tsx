@@ -62,7 +62,7 @@ export function AnalyzeBox({
   }
   // Analyze box inside the right bar
   return (
-    <div className="flex h-full flex-col justify-between">
+    <div className="w-full md:w-auto flex h-full flex-col justify-between">
       {/* Built with Ducky link at the top for md+ */}
       <div className="hidden justify-end md:flex">
         <a
@@ -75,7 +75,7 @@ export function AnalyzeBox({
         </a>
       </div>
       <div
-        className="w-full rounded-2xl p-6 shadow-xl"
+        className="w-full p-6 shadow-xl rounded-t-2xl md:rounded-2xl"
         style={{ background: 'var(--blue)', padding: 24 }}
       >
         <form onSubmit={urlForm.handleSubmit(handleUrlSubmit)}>

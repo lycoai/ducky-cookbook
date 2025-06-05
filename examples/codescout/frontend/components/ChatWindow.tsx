@@ -14,6 +14,8 @@ type QuestionFormData = z.infer<typeof questionSchema>
 
 interface ChatWindowProps {
   selectedIndex: string
+  showAnalyzeBox: boolean
+  setShowAnalyzeBox: (show: boolean) => void
 }
 
 const renderMessageContent = (content: string) => {
@@ -48,7 +50,11 @@ const renderMessageContent = (content: string) => {
   })
 }
 
-export function ChatWindow({ selectedIndex }: Readonly<ChatWindowProps>) {
+export function ChatWindow({
+  selectedIndex,
+  setShowAnalyzeBox,
+  showAnalyzeBox,
+}: Readonly<ChatWindowProps>) {
   const { messages, isLoading, sendMessage } = useChat({
     indexName: selectedIndex,
   })
@@ -67,12 +73,10 @@ export function ChatWindow({ selectedIndex }: Readonly<ChatWindowProps>) {
   const chatStarted = messages.length > 0
 
   return (
-    <div className="flex max-w-[644px] flex-1 flex-col justify-center overflow-hidden">
+    <div className="flex max-w-[644px] flex-1 flex-col justify-center overflow-hidden gap-10">
       {/* Chat Messages Area */}
-      <div
-        className={`${chatStarted ? 'flex-1 overflow-y-auto pt-6' : 'pb-6'}`}
-      >
-        <div className={`px-4 ${chatStarted ? '' : 'py-6'}`}>
+      <div className={`${chatStarted ? 'flex-1 overflow-y-auto pt-6' : ''}`}>
+        <div>
           {chatStarted ? (
             <div className="space-y-6">
               {messages.map((message) => (
@@ -81,7 +85,7 @@ export function ChatWindow({ selectedIndex }: Readonly<ChatWindowProps>) {
                   className={`flex ${message.type === 'user' ? 'justify-end' : 'justify-start'}`}
                 >
                   <div
-                    className={`max-w-[80%] rounded-2xl px-4 py-2 text-white ${message.type === 'user' ? 'bg-[#FFFFFF24]' : 'bg-transparent'}`}
+                    className={`rounded-2xl px-4 py-2 text-white ${message.type === 'user' ? 'bg-[#FFFFFF24]' : 'bg-transparent'}`}
                   >
                     <div className="whitespace-pre-wrap text-white">
                       {renderMessageContent(message.content)}
@@ -92,12 +96,12 @@ export function ChatWindow({ selectedIndex }: Readonly<ChatWindowProps>) {
             </div>
           ) : (
             // Welcome message - Only shown when no messages exist
-            <div className="flex h-full items-center justify-center px-4">
-              <div className="text-center">
-                <h3 className="mb-4 text-[46px] font-bold text-white">
+            <div className="flex h-full items-center justify-center">
+              <div className="flex flex-col text-center gap-4">
+                <h1 className="text-[32px] md:text-[46px] font-bold text-white leading-[115%]">
                   Explore {selectedIndex} repository
-                </h3>
-                <p className="text-lg text-white/70">
+                </h1>
+                <p className="text-lg text-[var(--gray)] leading-[145%]">
                   Ask questions about the repository. I can help you understand
                   implementation details, code structure, and functionality.
                 </p>
@@ -183,6 +187,13 @@ export function ChatWindow({ selectedIndex }: Readonly<ChatWindowProps>) {
           </button>
         </form>
       </div>
+
+      <span
+        onClick={() => setShowAnalyzeBox(!showAnalyzeBox)}
+        className="text-white text-lg font-medium leading-[145%] underline decoration-auto underline-offset-auto text-center md:hidden"
+      >
+        Analyze your document
+      </span>
     </div>
   )
 }
