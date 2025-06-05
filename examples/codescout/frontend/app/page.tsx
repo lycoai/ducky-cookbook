@@ -101,12 +101,16 @@ export default function Home() {
 
         {/* Center Chat Window */}
         <div className="flex w-full flex-1 justify-center">
-          {isSubmitted && (
+          {isSubmitted ? (
             <ChatWindow
               selectedIndex={selectedIndex}
               setShowAnalyzeBox={setShowAnalyzeBox}
               showAnalyzeBox={showAnalyzeBox}
             />
+          ) : (
+            <div className="flex items-center justify-center h-screen">
+              <span className="loader"></span>
+            </div>
           )}
         </div>
 
