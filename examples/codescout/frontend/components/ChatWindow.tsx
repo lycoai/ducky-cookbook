@@ -85,7 +85,7 @@ export function ChatWindow({
                   className={`flex ${message.type === 'user' ? 'justify-end' : 'justify-start'}`}
                 >
                   <div
-                    className={`rounded-2xl px-4 py-2 text-white ${message.type === 'user' ? 'bg-[#FFFFFF24]' : 'bg-transparent'}`}
+                    className={`w-full rounded-2xl px-4 py-2 text-white ${message.type === 'user' ? 'bg-[#FFFFFF24]' : 'bg-transparent'}`}
                   >
                     <div className="whitespace-pre-wrap text-white">
                       {renderMessageContent(message.content)}
