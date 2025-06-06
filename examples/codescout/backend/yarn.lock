@@ -959,7 +959,7 @@ __metadata:
     "@types/node": "npm:^22.15.3"
     cors: "npm:^2.8.5"
     dotenv: "npm:^16.5.0"
-    duckyai-ts: "npm:^1.0.4"
+    duckyai-ts: "npm:^1.1.0"
     express: "npm:^5.1.0"
     nodemon: "npm:^3.1.10"
     openai: "npm:^4.96.2"
@@ -969,9 +969,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"duckyai-ts@npm:^1.0.4":
-  version: 1.0.4
-  resolution: "duckyai-ts@npm:1.0.4"
+"duckyai-ts@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "duckyai-ts@npm:1.1.0"
   peerDependencies:
     "@modelcontextprotocol/sdk": ">=1.5.0 <1.10.0"
     zod: ">= 3"
@@ -980,7 +980,7 @@ __metadata:
       optional: true
   bin:
     mcp: bin/mcp-server.js
-  checksum: 1da92cc4cdd421505df8464a8b6709bb0e57ddf3cbc842c67bc96132180ac915a0abaca12b24b009feba515626f721200c191ac5f47e015170753b2c65464a98
+  checksum: 408fe781599758fbe1d6a503caed920db606143f91575478d550a424e93bc238ffb15ed00228a7fc6d624cde30865eefa15c337ac66743486a31e475c73f8f58
   languageName: node
   linkType: hard
 
