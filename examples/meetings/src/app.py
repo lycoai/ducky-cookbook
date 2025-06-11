@@ -41,8 +41,8 @@ async def read_root():
 
 # Initialize the DuckyAI client using the API key from environment variables
 client = DuckyAI(api_key=os.getenv("DUCKY_API_KEY"))
-# Define the name of the index to be used in DuckyAI
-index_name = "ducky-test"
+# Get the index name from environment variables with a fallback
+index_name = os.getenv("DUCKY_INDEX_NAME", "ducky-test")
 
 # Initialize the Groq client using the API key from environment variables
 groq_client = groq.Client(api_key=os.getenv("GROQ_API_KEY"))
@@ -72,7 +72,7 @@ async def chat(msg: ChatMessage):
 
         # Use the Groq API to generate a chat completion (response)
         completion = groq_client.chat.completions.create(
-            model="llama3-70b-8192",
+            model=os.getenv("GROQ_MODEL_NAME", "llama3-70b-8192"),
             messages=[
             {
                 "role": "system",

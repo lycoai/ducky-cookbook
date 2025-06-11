@@ -1,5 +1,113 @@
 
-🕘 Daily Scrum - 9:30 AM
+
+🗓️ Product Strategy Workshop – Thursday, 6 June 2025, 9:30 AM (PKT)
+
+Participants
+• Imran (Head of Product)
+• Sarah (Product Manager)
+• Faisal (Sales Ops Lead)
+• Maria (Growth Marketing)
+• Ali (Backend Engineer)
+• Tania (Frontend Engineer)
+• Usman (ML Engineer)
+• Hassan (QA Engineer)
+
+⸻
+
+Imran (HoP) – Opening & First-Principles Framing
+
+“Let’s strip this down. Why does lead scoring exist? Three atomic goals:
+1️⃣ Relevance – reps must know whom to call first.
+2️⃣ Efficiency – cut manual triage to near-zero.
+3️⃣ Learning loop – every closed deal should improve the model.
+If any feature doesn’t serve one of those, it’s noise.”
+
+⸻
+
+Sarah (PM) – Vision & North-Star Metric
+
+“Our north-star: Lift SQL-to-Win rate by 20 % within two quarters.
+	•	Phase 1 (Q3): Deploy ML-based scoring badges inside Lead Detail.
+	•	Phase 2 (Q4): Auto-prioritise the rep work-queue.
+	•	Phase 3 (Q1 2026): Predict next best action (demo, email, call) per lead.”
+
+⸻
+
+Faisal (Sales Ops) – Pain-Point Validation
+
+“Reps burn ~45 min/day triaging. Hot leads still sit 6 h on average before first touch. If we cut that to 1 h, our models suggest +9 % revenue.”
+
+⸻
+
+Maria (Growth) – Market Angle
+
+“Competitors price lead-scoring add-ons at $50–$150/seat. Position ours as included in Pro tier to drive upgrades from Basic; upsell Insight Packs later.”
+
+⸻
+
+Usman (ML) – Data Reality Check
+
+“We have 48 k labeled leads over 24 months. 2 k unique conversions → class imbalance 1:23.
+First-principles remedy:
+	•	Use focal loss & SMOTE-NC.
+	•	Engineer temporal features (avg pageviews last 7 days, recency decay).
+	•	SHAP for explainability; log every inference for online learning.”
+
+⸻
+
+Ali (Backend) – Architectural Options
+
+“Two paths:
+	1.	Monolith Extension – quick, but limits model upgrades.
+	2.	Event-Driven Microservice – Kafka queue, model hosted on ECS, async call-back.
+We pick #2; gives plug-and-play for future ‘next-best-action’ models.”
+
+⸻
+
+Tania (Frontend) – UX Principles
+
+“Badges alone won’t cut it. We’ll surface why a lead is ‘Hot’ in one click. Minimalist: color-coded badge + info-icon → modal with SHAP-derived bullet list.”
+
+⸻
+
+Hassan (QA) – Quality Gates
+
+“Define acceptance criteria now:
+	•	P90 inference latency < 800 ms.
+	•	Badge matches DB value 100 %.
+	•	Tooltips render within 50 ms of hover.
+	•	Model expl fails gracefully with stub.”
+
+⸻
+
+Decision Round-up
+	1.	Adopt event-driven microservice (Ali).
+	2.	Ship Phase 1 by July 5 to staging, GA July 19.
+	3.	Bundle in Pro tier; marketing launch blog + webinar mid-July.
+	4.	Track SQL-to-Win lift weekly; fallback to rules-based if lift < 5 % after 30 days.
+	5.	Log every inference to S3 for continuous retraining loop.
+
+⸻
+
+Action Items
+
+Owner	Task	ETA
+Usman	Prototype model v1 with SHAP	13 Jun
+Ali	Kafka topics & service scaffold	14 Jun
+Tania	UI wireframes → Figma	12 Jun
+Hassan	Draft test matrix	12 Jun
+Maria	Pricing page update draft	15 Jun
+
+
+⸻
+
+My Take (opinion)
+
+Solid first-principles start: clear why->what->how chain, crisp metric, and explicit rollback guardrail. Biggest risk is data drift once reps change behavior because of the scores—plan an online-learning cadence sooner rather than later.
+---
+
+
+🕘 Daily Scrum - Thursday, 6 June 2025, 11:00 AM (PKT)
 
 Participants:
 	•	Sarah (Product Manager)

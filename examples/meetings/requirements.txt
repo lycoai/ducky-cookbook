@@ -1,2 +1,5 @@
 dotenv-python
 duckyai
+fastapi
+uvicorn[standard]
+groq
