@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Ducky Chat</title>
+  <link rel="stylesheet" href="/static/styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+  <h1>
+    <div class="logo">d</div>
+    Ducky Chat
+  </h1>
+  <div class="chat-container">
+    <div id="chat-box"></div>
+    <div class="input-container">
+      <input type="text" id="user-input" placeholder="Type a message..." />
+      <button onclick="sendMessage()">Send</button>
+    </div>
+  </div>
+
+  <script>
+    async function sendMessage() {
+      const input = document.getElementById("user-input");
+      const chatBox = document.getElementById("chat-box");
+      const message = input.value.trim();
+      if (!message) return;
+
+      // Add user message
+      chatBox.innerHTML += `<p><strong>You:</strong> ${message}</p>`;
+      input.value = "";
+      
+      // Auto-scroll to bottom
+      chatBox.scrollTop = chatBox.scrollHeight;
+
+      try {
+        const res = await fetch("http://localhost:8000/chat", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ message })
+        });
+
+        const data = await res.json();
+        const duckyHtml = marked.parse(data.response);
+        chatBox.innerHTML += `<div class="ducky-response"><strong>Ducky:</strong>` + `${duckyHtml}</div>`;
+
+        // Auto-scroll to bottom
+        chatBox.scrollTop = chatBox.scrollHeight;
+      } catch (error) {
+        chatBox.innerHTML += `<p><strong>Error:</strong> Could not connect to server</p>`;
+        chatBox.scrollTop = chatBox.scrollHeight;
+      }
+    }
+
+    // Allow sending message with Enter key
+    document.getElementById("user-input").addEventListener("keypress", function(event) {
+      if (event.key === "Enter") {
+        sendMessage();
+      }
+    });
+  </script>
+</body>
+</html>

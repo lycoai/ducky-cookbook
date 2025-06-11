@@ -1,0 +1,102 @@
+
+🕘 Daily Scrum - 9:30 AM
+
+Participants:
+	•	Sarah (Product Manager)
+	•	Ali (Backend Engineer)
+	•	Tania (Frontend Engineer)
+	•	Usman (ML Engineer)
+	•	Hassan (QA Engineer)
+
+⸻
+
+Sarah (PM):
+“Alright team, quick round today. Let’s sync on the AI Lead Scoring feature for our CRM. Ali, can you go first?”
+
+⸻
+
+Ali (Backend):
+“Sure. Yesterday, I completed the REST endpoint for /leads/score. It accepts the POST payload with lead ID, context object, and optional override flags. The service now asynchronously queues the request into Kafka — topic lead-score-requests — and expects the score from Usman’s scoring microservice via the lead-score-responses topic.”
+
+“The async response is written back to our PostgreSQL lead_scores table, with columns: lead_id, score, confidence, explanation_json, and timestamp. I’m exposing a polling endpoint /leads/score/:id/status for the frontend to check processing state — it’s currently stubbed but will return either PENDING, SUCCESS, or FAILED.”
+
+“Today, I’ll work on securing the endpoint with JWT scopes. I’ll use our existing middleware for crm.write.leads. ETA for prod-ready endpoint: 2 days.”
+
+⸻
+
+Sarah:
+“Good. Let’s make sure the explanation in explanation_json is human-readable. Tania?”
+
+⸻
+
+Tania (Frontend):
+“I’m working on the Lead Detail view in React. When the lead is scored, we show a badge: Hot, Warm, or Cold, based on the score threshold — above 80 is Hot, below 40 is Cold.”
+
+“We also added a tooltip using react-tooltip that parses the explanation JSON. It includes rules like ‘Visited pricing page 3+ times’, ‘Opened email campaign X’, etc.”
+
+“I’m building a horizontal bar chart with Recharts for visualizing scoring breakdown by feature importance. Usman, I’ll need the schema of explanation_json to map it properly.”
+
+⸻
+
+Usman (ML Engineer):
+“Sure, explanation JSON is structured as:
+
+{
+  'feature_importance': {
+    'page_views': 0.45,
+    'email_opens': 0.3,
+    'demo_requested': 0.2,
+    'form_filled': 0.05
+  },
+  'final_score': 88,
+  'confidence': 0.92
+}
+
+“I’m using XGBoost for now with SHAP values to generate the importance. Trained on 2 years of sales-labeled leads, using 23 features — behavioral and firmographic. Model is versioned via MLflow: model:v12. It’s hosted on FastAPI in a container on ECS.”
+
+“I deployed the endpoint /score-lead which accepts the full lead JSON. Response includes score, explanation, and confidence. Today, I’m adding an A/B toggle in the API for fallback model model:v11 just in case.”
+
+⸻
+
+Sarah:
+“Excellent. Can we log the SHAP explanations in our feature store for retraining?”
+
+⸻
+
+Usman:
+“Yes. I’ll push each scoring instance to our lead_scoring_logs table in S3 via Glue job daily.”
+
+⸻
+
+Hassan (QA):
+“I’ve written Cypress tests for score badge rendering, tooltip validation, and polling behavior. I’ll test edge cases today — like malformed JSON in explanation, API timeouts, and fallback model switches.”
+
+⸻
+
+Sarah:
+“Perfect. Let’s align tomorrow on release readiness. We need this in staging by Friday EOD. Any blockers?”
+
+⸻
+
+Ali:
+“None from me.”
+
+⸻
+
+Tania:
+“All good, just need final CSS tweaks on the tooltip.”
+
+⸻
+
+Usman:
+“I’ll document the API schema on Confluence today.”
+
+⸻
+
+Hassan:
+“I’ll review that once it’s up.”
+
+⸻
+
+Sarah:
+“Great. Thanks team. Let’s sync tomorrow — same time.”
