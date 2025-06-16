@@ -21,17 +21,37 @@ transcript_file_path = os.getenv("TRANSCRIPT_FILE_PATH")
 if transcript_file_path is None:
     raise ValueError("TRANSCRIPT_FILE_PATH environment variable not set")
 
+# Get POLICIES_FILE_PATH from environment variables
+policies_file_path = os.getenv("POLICIES_FILE_PATH")
+if policies_file_path is None:
+    raise ValueError("POLICIES_FILE_PATH environment variable not set")
+
 # Initialize an empty string to store the transcript content
 transcript_content= ""
 # Open the transcript.txt file in read mode with utf-8 encoding
 with open(transcript_file_path, 'r', encoding='utf-8') as f:
     # Read the entire content of the file into transcript_content
     transcript_content = f.read()
-    
-# Index a document using the Ducky AI client
+
+# Index the transcript document using the Ducky AI client
 client.documents.index(
     # Specify the name of the index, this can be found in the Ducky AI dashboard
     index_name=ducky_index_name,
     # Provide the content to be indexed
     content=transcript_content,
+)
+
+# Initialize an empty string to store the policies content
+policies_content= ""
+# Open the policies.txt file in read mode with utf-8 encoding
+with open(policies_file_path, 'r', encoding='utf-8') as f:
+    # Read the entire content of the file into policies_content
+    policies_content = f.read()
+
+# Index the policies document using the Ducky AI client
+client.documents.index(
+    # Specify the name of the index, this can be found in the Ducky AI dashboard
+    index_name=ducky_index_name,
+    # Provide the content to be indexed
+    content=policies_content,
 )
