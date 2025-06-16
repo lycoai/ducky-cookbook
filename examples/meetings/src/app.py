@@ -25,15 +25,19 @@ app.add_middleware(
     allow_headers=["*"],  # Allows all headers
 )
 
+# Determine the absolute path to the static directory
+static_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "static")
 # Mount a directory named "static" to serve static files from the "/static" path
 # For example, a file at "static/styles.css" would be accessible at "/static/styles.css"
-app.mount("/static", StaticFiles(directory="static"), name="static")
+app.mount("/static", StaticFiles(directory=static_dir), name="static")
 
 # Define a route for the root URL ("/") that serves an HTML page
 @app.get("/", response_class=HTMLResponse)
 async def read_root():
+    # Determine the absolute path to index.html
+    index_html_path = os.path.join(static_dir, "index.html")
     # Open the index.html file in read mode
-    with open("static/index.html", "r") as f:
+    with open(index_html_path, "r") as f:
         # Read the content of the HTML file
         html_content = f.read()
     # Return an HTML response with the content of index.html
