@@ -1,0 +1,7 @@
+slack-sdk
+backoff
+python-dotenv
+duckyai
+fastapi
+uvicorn[standard]
+groq
