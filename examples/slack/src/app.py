@@ -2,8 +2,7 @@
 import os, groq, requests
 from dotenv import load_dotenv
 from fastapi import FastAPI
-from fastapi.responses import HTMLResponse, JSONResponse
-from fastapi.staticfiles import StaticFiles
+from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from duckyai import DuckyAI
@@ -20,17 +19,10 @@ client    = DuckyAI(api_key=os.getenv("DUCKY_API_KEY"))
 groq_cl   = groq.Client(api_key=os.getenv("GROQ_API_KEY"))
 index     = os.getenv("DUCKY_INDEX_NAME", "ducky-test")
 
-# ── CORS + static mounts (same as before) ───────────────────────────────────
+# ── CORS ───────────────────────────────────
 app.add_middleware(
     CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"]
 )
-static_dir = os.path.join(os.path.dirname(__file__), "..", "static")
-app.mount("/static", StaticFiles(directory=static_dir), name="static")
-
-@app.get("/", response_class=HTMLResponse)
-async def read_root():
-    with open(os.path.join(static_dir, "index.html")) as f:
-        return HTMLResponse(f.read())
 
 # ── FastAPI /chat endpoint (unchanged) ──────────────────────────────────────
 class ChatMessage(BaseModel):
