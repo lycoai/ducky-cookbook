@@ -24,7 +24,7 @@ wheels/
 venv/
 env/
 ENV/
-.env
+# Ignore all env files by default
 .venv
 
 # IDE
@@ -47,8 +47,7 @@ htmlcov/
 logs/
 
 # env files (can opt-in for committing if needed)
-.env*
-!.env.local.example
+.env
 
 # Distribution / packaging
 .Python
