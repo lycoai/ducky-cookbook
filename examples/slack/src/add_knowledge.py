@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 import json
 
 # Load environment variables from .env file
-load_dotenv()
+load_dotenv(override=True)
 
 # Instantiate a Ducky AI Client
 # The API key is retrieved from the environment variables
@@ -16,6 +16,7 @@ client = DuckyAI(api_key=os.getenv("DUCKY_API_KEY"))
 
 # Get DUCKY_INDEX_NAME from environment variables
 ducky_index_name = os.getenv("DUCKY_INDEX_NAME")
+print(f"DUCKY_INDEX_NAME: {ducky_index_name}")
 if ducky_index_name is None:
     raise ValueError("DUCKY_INDEX_NAME environment variable not set")
 

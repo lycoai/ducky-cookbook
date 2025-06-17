@@ -13,7 +13,7 @@ from slack_bolt.adapter.socket_mode import SocketModeHandler
 import threading
 
 # ── env-vars & clients (unchanged) ──────────────────────────────────────────
-load_dotenv()
+load_dotenv(override=True)  # Load environment variables from .env file
 app       = FastAPI()
 client    = DuckyAI(api_key=os.getenv("DUCKY_API_KEY"))
 groq_cl   = groq.Client(api_key=os.getenv("GROQ_API_KEY"))
