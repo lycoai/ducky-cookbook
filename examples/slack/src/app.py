@@ -17,7 +17,9 @@ load_dotenv(override=True)  # Load environment variables from .env file
 app       = FastAPI()
 client    = DuckyAI(api_key=os.getenv("DUCKY_API_KEY"))
 groq_cl   = groq.Client(api_key=os.getenv("GROQ_API_KEY"))
-index     = os.getenv("DUCKY_INDEX_NAME", "ducky-test")
+index     = os.getenv("DUCKY_INDEX_NAME", "ducky-slack-test")
+
+print(f"DUCKY_INDEX_NAME: {index}")
 
 # ── CORS ───────────────────────────────────
 app.add_middleware(
