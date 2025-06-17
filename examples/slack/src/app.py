@@ -51,7 +51,7 @@ async def chat(msg: ChatMessage):
 #                Slack Bolt Socket-Mode section (new)
 # ────────────────────────────────────────────────────────────────────────────
 SLACK_BOT_TOKEN = os.getenv("SLACK_BOT_TOKEN")     # xoxb-…
-SLACK_APP_TOKEN = os.getenv("SLACK_BOT_TOKEN")     # xapp-1-A… with connections:write
+SLACK_APP_TOKEN = os.getenv("SLACK_APP_TOKEN")     # xapp-1-A… with connections:write
 
 bolt = SlackApp(token=SLACK_BOT_TOKEN)
 
