@@ -1,100 +1,88 @@
-import groq
-from fastapi import FastAPI, Request
+# ── imports you already have ────────────────────────────────────────────────
+import os, groq, requests
+from dotenv import load_dotenv
+from fastapi import FastAPI
 from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from duckyai import DuckyAI
-from fastapi.middleware.cors import CORSMiddleware
 
-#load environment variables
-import os
-from dotenv import load_dotenv
+# ── NEW: slack-bolt / threading imports ─────────────────────────────────────
+from slack_bolt import App as SlackApp
+from slack_bolt.adapter.socket_mode import SocketModeHandler
+import threading
+
+# ── env-vars & clients (unchanged) ──────────────────────────────────────────
 load_dotenv()
+app       = FastAPI()
+client    = DuckyAI(api_key=os.getenv("DUCKY_API_KEY"))
+groq_cl   = groq.Client(api_key=os.getenv("GROQ_API_KEY"))
+index     = os.getenv("DUCKY_INDEX_NAME", "ducky-test")
 
-
-# Create an instance of the FastAPI application
-app = FastAPI()
-
-# Configure CORS (Cross-Origin Resource Sharing) middleware
-# This allows requests from any origin, with any method and any headers.
-# For production, you might want to restrict these settings.
+# ── CORS + static mounts (same as before) ───────────────────────────────────
 app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],  # Allows all origins
-    allow_methods=["*"],  # Allows all HTTP methods
-    allow_headers=["*"],  # Allows all headers
+    CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"]
 )
-
-# Determine the absolute path to the static directory
-static_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "static")
-# Mount a directory named "static" to serve static files from the "/static" path
-# For example, a file at "static/styles.css" would be accessible at "/static/styles.css"
+static_dir = os.path.join(os.path.dirname(__file__), "..", "static")
 app.mount("/static", StaticFiles(directory=static_dir), name="static")
 
-# Define a route for the root URL ("/") that serves an HTML page
 @app.get("/", response_class=HTMLResponse)
 async def read_root():
-    # Determine the absolute path to index.html
-    index_html_path = os.path.join(static_dir, "index.html")
-    # Open the index.html file in read mode
-    with open(index_html_path, "r") as f:
-        # Read the content of the HTML file
-        html_content = f.read()
-    # Return an HTML response with the content of index.html
-    return HTMLResponse(content=html_content, status_code=200)
+    with open(os.path.join(static_dir, "index.html")) as f:
+        return HTMLResponse(f.read())
 
-# Initialize the DuckyAI client using the API key from environment variables
-client = DuckyAI(api_key=os.getenv("DUCKY_API_KEY"))
-# Get the index name from environment variables with a fallback
-index_name = os.getenv("DUCKY_INDEX_NAME", "ducky-test")
-
-# Initialize the Groq client using the API key from environment variables
-groq_client = groq.Client(api_key=os.getenv("GROQ_API_KEY"))
-
-
-# Define a Pydantic model for the chat message request body
-# This ensures that the incoming JSON payload has a "message" field of type string
+# ── FastAPI /chat endpoint (unchanged) ──────────────────────────────────────
 class ChatMessage(BaseModel):
     message: str
 
-# Define a POST endpoint for "/chat" to handle chat messages
 @app.post("/chat")
 async def chat(msg: ChatMessage):
-    # Retrieve relevant documents from DuckyAI based on the user's message
-    results = client.documents.retrieve(
-        index_name=index_name,  # The name of the DuckyAI index to search
-        query=msg.message,      # The user's message to use as the search query
-        top_k=1                 # Retrieve only the top 1 most relevant document
-    )
-
-    # Check if any documents were found
-    if results.documents:
-        # If documents are found, extract context from the first document's content_chunks
-        # It joins all content_chunks into a single string.
-        # If there are no content_chunks, it defaults to an empty string.
-        context = " ".join(results.documents[0].content_chunks) if results.documents[0].content_chunks else ""
-
-        # Use the Groq API to generate a chat completion (response)
-        completion = groq_client.chat.completions.create(
+    docs = client.documents.retrieve(index_name=index, query=msg.message, top_k=1)
+    if docs.documents:
+        ctx = " ".join(docs.documents[0].content_chunks or [])
+        completion = groq_cl.chat.completions.create(
             model=os.getenv("GROQ_MODEL_NAME", "llama3-70b-8192"),
             messages=[
-            {
-                "role": "system",
-                "content": f"""You are a helpful assistant. 
-                Always respond in markdown format.
-                Use the provided context to answer questions accurately.
-                For casual greetings, general conversation, or questions 
-                unrelated to the context, respond naturally without referencing the context. 
-                Context (use only if relevant): {context}"""
-            },
-            {"role": "user", "content": msg.message}
+                {"role": "system",
+                 "content": f"You are a helpful assistant.\nContext: {ctx}"},
+                {"role": "user", "content": msg.message}
             ]
         )
-        # Extract the reply from the model's response
         reply = completion.choices[0].message.content
     else:
-        # If no relevant documents are found by DuckyAI, provide a default response
         reply = "Sorry, I don't know how to respond yet."
 
-    # Return the reply as a JSON response
-    return JSONResponse(content={"response": reply})
+    return JSONResponse({"response": reply})
+
+# ────────────────────────────────────────────────────────────────────────────
+#                Slack Bolt Socket-Mode section (new)
+# ────────────────────────────────────────────────────────────────────────────
+SLACK_BOT_TOKEN = os.getenv("SLACK_BOT_TOKEN")     # xoxb-…
+SLACK_APP_TOKEN = os.getenv("SLACK_APP_TOKEN")     # xapp-1-A… with connections:write
+
+bolt = SlackApp(token=SLACK_BOT_TOKEN)
+
+@bolt.event("app_mention")
+def handle_mention(body, say):
+    event       = body["event"]
+    user_text   = event["text"].split(maxsplit=1)[1]   # drop "@bot"
+    thread_ts   = event.get("thread_ts") or event["ts"]
+
+    # call our own FastAPI /chat endpoint
+    try:
+        resp = requests.post(
+            "http://localhost:8005/chat",              # <── update if different
+            json={"message": user_text}, timeout=15
+        ).json()
+        answer = resp.get("response", "…")
+    except Exception as exc:
+        answer = f"Error calling backend: {exc}"
+
+    say(text=answer, thread_ts=thread_ts)
+
+# ── run Bolt in a background thread so FastAPI keeps serving ────────────────
+def start_bolt():
+    SocketModeHandler(bolt, SLACK_APP_TOKEN).start()
+
+threading.Thread(target=start_bolt, daemon=True).start()

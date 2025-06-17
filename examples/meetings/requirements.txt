@@ -3,3 +3,6 @@ duckyai
 fastapi
 uvicorn[standard]
 groq
+slack_bolt
+slack_sdk
+requests
