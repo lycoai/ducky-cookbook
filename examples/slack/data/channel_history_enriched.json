@@ -1,730 +1,240 @@
 [
   {
-    "subtype": "channel_join",
-    "user": "U091TRJH5M2",
-    "text": "<@U091TRJH5M2> has joined the channel",
-    "inviter": "U08T62ERGGZ",
-    "type": "message",
-    "ts": "1750156054.902629",
-    "username": "Powerful app",
-    "iso_time": "2025-06-17T10:27:34.902629+00:00"
-  },
-  {
-    "subtype": "channel_join",
-    "user": "U08TEA2U2CD",
-    "text": "<@U08TEA2U2CD> has joined the channel",
-    "type": "message",
-    "ts": "1747935920.031099",
-    "username": "Jorge Razo",
-    "iso_time": "2025-05-22T17:45:20.031099+00:00"
-  },
-  {
-    "subtype": "channel_join",
-    "user": "U08T53TV30V",
-    "text": "<@U08T53TV30V> has joined the channel",
-    "type": "message",
-    "ts": "1747753257.143709",
-    "username": "Glenn",
-    "iso_time": "2025-05-20T15:00:57.143709+00:00"
-  },
-  {
-    "subtype": "channel_join",
-    "user": "U08TPL7AFEU",
-    "text": "<@U08TPL7AFEU> has joined the channel",
-    "type": "message",
-    "ts": "1747659478.100579",
-    "username": "Rishabh Rastogi",
-    "iso_time": "2025-05-19T12:57:58.100579+00:00"
-  },
-  {
-    "subtype": "channel_join",
-    "user": "U08SJ4D7C5V",
-    "text": "<@U08SJ4D7C5V> has joined the channel",
-    "type": "message",
-    "ts": "1747627689.204279",
-    "username": "Vatsala Singh",
-    "iso_time": "2025-05-19T04:08:09.204279+00:00"
-  },
-  {
-    "subtype": "channel_join",
-    "user": "U08T62ERGGZ",
-    "text": "<@U08T62ERGGZ> has joined the channel",
-    "type": "message",
-    "ts": "1747427697.202139",
-    "username": "Rana Waqas",
-    "iso_time": "2025-05-16T20:34:57.202139+00:00"
-  },
-  {
-    "subtype": "channel_join",
-    "user": "U08SF0KRZ46",
-    "text": "<@U08SF0KRZ46> has joined the channel",
-    "type": "message",
-    "ts": "1747423225.472379",
-    "username": "Glenn",
-    "iso_time": "2025-05-16T19:20:25.472379+00:00"
-  },
-  {
-    "subtype": "channel_join",
-    "user": "U08R847AYLU",
-    "text": "<@U08R847AYLU> has joined the channel",
-    "type": "message",
-    "ts": "1746547123.901169",
-    "username": "Rishabh Rastogi",
-    "iso_time": "2025-05-06T15:58:43.901169+00:00"
-  },
-  {
-    "subtype": "channel_join",
-    "user": "U08QQNHFLES",
-    "text": "<@U08QQNHFLES> has joined the channel",
-    "type": "message",
-    "ts": "1746449507.817749",
-    "username": "vatsala singh",
-    "iso_time": "2025-05-05T12:51:47.817749+00:00"
-  },
-  {
-    "subtype": "channel_join",
-    "user": "U08J2KF7XRU",
-    "text": "<@U08J2KF7XRU> has joined the channel",
-    "type": "message",
-    "ts": "1742320424.488399",
-    "username": "Luc\u00eda Canduelas",
-    "iso_time": "2025-03-18T17:53:44.488399+00:00"
-  },
-  {
-    "subtype": "channel_join",
-    "user": "U08CCSEAGQ3",
-    "text": "<@U08CCSEAGQ3> has joined the channel",
-    "type": "message",
-    "ts": "1738971650.209249",
-    "username": "Jan Denver GImenez",
-    "iso_time": "2025-02-07T23:40:50.209249+00:00"
-  },
-  {
-    "subtype": "channel_join",
-    "user": "U08BVNP16LX",
-    "text": "<@U08BVNP16LX> has joined the channel",
-    "type": "message",
-    "ts": "1738940554.880929",
-    "username": "Silas Sabino",
-    "iso_time": "2025-02-07T15:02:34.880929+00:00"
-  },
-  {
-    "subtype": "channel_join",
-    "user": "U08AT7AQG4X",
-    "text": "<@U08AT7AQG4X> has joined the channel",
-    "type": "message",
-    "ts": "1738341270.522619",
-    "username": "Rana Waqas",
-    "iso_time": "2025-01-31T16:34:30.522619+00:00"
-  },
-  {
-    "subtype": "channel_join",
-    "user": "U07VAFDLZ6X",
-    "text": "<@U07VAFDLZ6X> has joined the channel",
-    "type": "message",
-    "ts": "1730991335.868729",
-    "username": "Simon Swedlund",
-    "iso_time": "2024-11-07T14:55:35.868729+00:00"
-  },
-  {
-    "subtype": "channel_join",
-    "user": "U07V308ERM4",
-    "text": "<@U07V308ERM4> has joined the channel",
-    "type": "message",
-    "ts": "1730979376.350729",
-    "username": "Nandini",
-    "iso_time": "2024-11-07T11:36:16.350729+00:00"
-  },
-  {
-    "subtype": "channel_join",
-    "user": "U07S6HYDEAW",
-    "text": "<@U07S6HYDEAW> has joined the channel",
-    "type": "message",
-    "ts": "1729103311.820949",
-    "username": "Mojtaba Zare",
-    "iso_time": "2024-10-16T18:28:31.820949+00:00"
-  },
-  {
-    "subtype": "channel_join",
-    "user": "U07LGRVPCSE",
-    "text": "<@U07LGRVPCSE> has joined the channel",
-    "type": "message",
-    "ts": "1725858122.730099",
-    "username": "Mike Estaris",
-    "iso_time": "2024-09-09T05:02:02.730099+00:00"
-  },
-  {
-    "user": "U078E5TJE3G",
-    "type": "message",
-    "ts": "1725612553.497249",
-    "client_msg_id": "f232b78d-8b7b-4bfb-839f-752f72c06886",
-    "text": "Thanks for the update, <@U078BRKFXBQ>! Wishing you the best with the sales push. Ekho all the way!",
-    "team": "T078FHP1885",
-    "blocks": [
-      {
-        "type": "rich_text",
-        "block_id": "kt2tN",
-        "elements": [
-          {
-            "type": "rich_text_section",
-            "elements": [
-              {
-                "type": "text",
-                "text": "Thanks for the update, "
-              },
-              {
-                "type": "user",
-                "user_id": "U078BRKFXBQ"
-              },
-              {
-                "type": "text",
-                "text": "! Wishing you the best with the sales push. Ekho all the way!"
-              }
-            ]
-          }
-        ]
-      }
-    ],
-    "reactions": [
-      {
-        "name": "raised_hands",
-        "users": [
-          "U078BRKFXBQ"
-        ],
-        "count": 1
-      }
-    ],
-    "username": "Razi Khan",
-    "iso_time": "2024-09-06T08:49:13.497249+00:00"
-  },
-  {
-    "user": "U078P1865AQ",
-    "type": "message",
-    "ts": "1725557229.609139",
-    "client_msg_id": "90d48e4e-8dda-4b08-b8ae-9cdaf7da5660",
-    "text": "Thanks for the update! Wishing you the best of luck with the sales push.:rocket:",
-    "team": "T078FHP1885",
-    "blocks": [
-      {
-        "type": "rich_text",
-        "block_id": "GCEO9",
-        "elements": [
-          {
-            "type": "rich_text_section",
-            "elements": [
-              {
-                "type": "text",
-                "text": "Thanks for the update! Wishing you the best of luck with the sales push."
-              },
-              {
-                "type": "emoji",
-                "name": "rocket",
-                "unicode": "1f680"
-              }
-            ]
-          }
-        ]
-      }
-    ],
-    "reactions": [
-      {
-        "name": "raised_hands",
-        "users": [
-          "U078BRKFXBQ"
-        ],
-        "count": 1
-      }
-    ],
-    "username": "Daniel Afolabi",
-    "iso_time": "2024-09-05T17:27:09.609139+00:00"
-  },
-  {
-    "user": "U078S8B0D9U",
-    "type": "message",
-    "ts": "1725544527.412259",
-    "client_msg_id": "7ae7e3c9-a256-4123-a3a5-1f439275883d",
-    "text": "Hi Ale, It\u2019s great to hear that you're working earnestly on the sales side. I understand that generating sales can be challenging, and I\u2019m rooting for Ekho.",
-    "team": "T078FHP1885",
-    "blocks": [
-      {
-        "type": "rich_text",
-        "block_id": "ZX2cw",
-        "elements": [
-          {
-            "type": "rich_text_section",
-            "elements": [
-              {
-                "type": "text",
-                "text": "Hi Ale, It\u2019s great to hear that you're working earnestly on the sales side. I understand that generating sales can be challenging, and I\u2019m rooting for Ekho."
-              }
-            ]
-          }
-        ]
-      }
-    ],
-    "reactions": [
-      {
-        "name": "raised_hands",
-        "users": [
-          "U078BRKFXBQ"
-        ],
-        "count": 1
-      }
-    ],
-    "username": "Moses Ubah",
-    "iso_time": "2024-09-05T13:55:27.412259+00:00"
-  },
-  {
-    "user": "U078BRKFXBQ",
-    "type": "message",
-    "ts": "1725484425.451019",
-    "client_msg_id": "3577a7ae-e636-4c01-85e8-c6e3bc2a2e83",
-    "text": "Hey all, wanted to share another update. Still working 110% on the sales side, so don't foresee any development/design work in the near future. If that changes I'll let you know asap. My goal is still to get enough traction where there's enough full-time dev work, but that won't happen in near future (i.e. next few months). If I can help in the meantime with reviews on Upwork or being a reference please let me know.",
-    "team": "T078FHP1885",
-    "blocks": [
-      {
-        "type": "rich_text",
-        "block_id": "oEveR",
-        "elements": [
-          {
-            "type": "rich_text_section",
-            "elements": [
-              {
-                "type": "text",
-                "text": "Hey all, wanted to share another update. Still working 110% on the sales side, so don't foresee any development/design work in the near future. If that changes I'll let you know asap. My goal is still to get enough traction where there's enough full-time dev work, but that won't happen in near future (i.e. next few months). If I can help in the meantime with reviews on Upwork or being a reference please let me know."
-              }
-            ]
-          }
-        ]
-      }
-    ],
-    "username": "alejandro",
-    "iso_time": "2024-09-04T21:13:45.451019+00:00"
-  },
-  {
-    "user": "U078P1865AQ",
-    "type": "message",
-    "ts": "1724836134.070599",
-    "client_msg_id": "876D6B04-6ACB-4BE0-A8E8-9DC59C2A9394",
-    "text": "Great work Ale :rocket: ",
-    "team": "T078FHP1885",
-    "blocks": [
-      {
-        "type": "rich_text",
-        "block_id": "S7nWH",
-        "elements": [
-          {
-            "type": "rich_text_section",
-            "elements": [
-              {
-                "type": "text",
-                "text": "Great work Ale "
-              },
-              {
-                "type": "emoji",
-                "name": "rocket",
-                "unicode": "1f680"
-              },
-              {
-                "type": "text",
-                "text": " "
-              }
-            ]
-          }
-        ]
-      }
-    ],
-    "reactions": [
-      {
-        "name": "pray",
-        "users": [
-          "U078BRKFXBQ"
-        ],
-        "count": 1
-      }
-    ],
-    "username": "Daniel Afolabi",
-    "iso_time": "2024-08-28T09:08:54.070599+00:00"
-  },
-  {
-    "user": "U078BRKFXBQ",
-    "type": "message",
-    "ts": "1724791629.512619",
-    "client_msg_id": "9598f9f7-07cc-493c-8bec-f79396f6a5ec",
-    "text": "Hey <!channel>,sorry for the radio silence. Customer has been doing well. Been fully focused on sales since we need to get new customers through the door. I've been testing the idea of colleges, as an AI-powered career coach. Been seeing some good initial results. Will keep you all posted on progress, hope you're all doing well!",
-    "team": "T078FHP1885",
-    "blocks": [
-      {
-        "type": "rich_text",
-        "block_id": "irM+F",
-        "elements": [
-          {
-            "type": "rich_text_section",
-            "elements": [
-              {
-                "type": "text",
-                "text": "Hey "
-              },
-              {
-                "type": "broadcast",
-                "range": "channel"
-              },
-              {
-                "type": "text",
-                "text": ",sorry for the radio silence. Customer has been doing well. Been fully focused on sales since we need to get new customers through the door. I've been testing the idea of colleges, as an AI-powered career coach. Been seeing some good initial results. Will keep you all posted on progress, hope you're all doing well!"
-              }
-            ]
-          }
-        ]
-      }
-    ],
-    "reactions": [
-      {
-        "name": "raised_hands",
-        "users": [
-          "U078E5TJE3G"
-        ],
-        "count": 1
-      },
-      {
-        "name": "100",
-        "users": [
-          "U078S8B0D9U"
-        ],
-        "count": 1
-      }
-    ],
-    "username": "alejandro",
-    "iso_time": "2024-08-27T20:47:09.512619+00:00"
-  },
-  {
-    "user": "U078P1865AQ",
-    "type": "message",
-    "ts": "1723889307.280969",
-    "client_msg_id": "38D9B8A0-6353-4F64-8A89-0FED93D6DADC",
-    "text": "Happy weekend guys :rocket: ",
-    "team": "T078FHP1885",
-    "blocks": [
-      {
-        "type": "rich_text",
-        "block_id": "V7UeJ",
-        "elements": [
-          {
-            "type": "rich_text_section",
-            "elements": [
-              {
-                "type": "text",
-                "text": "Happy weekend guys "
-              },
-              {
-                "type": "emoji",
-                "name": "rocket",
-                "unicode": "1f680"
-              },
-              {
-                "type": "text",
-                "text": " "
-              }
-            ]
-          }
-        ]
-      }
-    ],
-    "reactions": [
-      {
-        "name": "100",
-        "users": [
-          "U078S8B0D9U",
-          "U078BRKFXBQ",
-          "U078E5TJE3G"
-        ],
-        "count": 3
-      }
-    ],
-    "username": "Daniel Afolabi",
-    "iso_time": "2024-08-17T10:08:27.280969+00:00"
-  },
-  {
-    "user": "U078BRKFXBQ",
-    "type": "message",
-    "ts": "1723812660.467699",
-    "edited": {
-      "user": "U078BRKFXBQ",
-      "ts": "1723812673.000000"
-    },
-    "client_msg_id": "C8D15A0D-FFC5-4327-A184-E188E6452676",
-    "text": "<!channel> no demo day today. Sorry for late heads up. Let\u2019s keep meetings adhoc for now as we see how the next few weeks play out. Thanks all and happy Friday",
-    "team": "T078FHP1885",
-    "blocks": [
-      {
-        "type": "rich_text",
-        "block_id": "ff0ay",
-        "elements": [
-          {
-            "type": "rich_text_section",
-            "elements": [
-              {
-                "type": "broadcast",
-                "range": "channel"
-              },
-              {
-                "type": "text",
-                "text": " no demo day today. Sorry for late heads up. Let\u2019s keep meetings adhoc for now as we see how the next few weeks play out. Thanks all and happy Friday"
-              }
-            ]
-          }
-        ]
-      }
-    ],
-    "reactions": [
-      {
-        "name": "raised_hands",
-        "users": [
-          "U078E5TJE3G"
-        ],
-        "count": 1
-      }
-    ],
-    "username": "alejandro",
-    "iso_time": "2024-08-16T12:51:00.467699+00:00"
-  },
-  {
-    "user": "U078BRKFXBQ",
-    "type": "message",
-    "ts": "1723717848.345519",
-    "client_msg_id": "7d876b01-2b3d-4f24-b7dc-e3b60a0e3b24",
+    "name": "alejandro",
     "text": "Just spoke to each one of you <!channel>. Wanted to thank you all for the great work so far, we built something really cool in a very short time window. There's a good movie I watched yesterday called \"The Boys in the Boat\" which is about a true story of an 8-person rowing team and all their sudden successes. In the movie they highlight how the most important piece behind their success is not how good each rower was, but how the boat moved as 1 not as 8 individual people. I think a lot of our success so far has come from moving as 1, not 4 individuals, through all the standups and challenges. We all leaned into a team mentality and it clearly paid off.\n\nTheir will be less dev and design work over the next few months. We'll still want to problem solve and add key features we identify based on customer feedback. The main focus will be however on GTM, i.e. selling what we have, which I'll be leading. I'll for sure be using Ekho to practice. Our goal there is to get 2-3 more paying betas this year, with 2+ of those converting to annual customers. This should give us enough traction to hopefully transition full-time by end of year/early next.\n\nThis is only the start. Thanks for the hard work.\n\nQuote of the day (from the book The Boys in the Boat): \"All were merged into one smoothly working machine; they were, in fact, a poem of motion, a symphony of swinging blades.\u201d",
-    "team": "T078FHP1885",
-    "blocks": [
+    "timestamp": "2024-08-15T10:30:48.345519+00:00"
+  },
+  {
+    "name": "alejandro",
+    "text": "<!channel> no demo day today. Sorry for late heads up. Let\u2019s keep meetings adhoc for now as we see how the next few weeks play out. Thanks all and happy Friday",
+    "timestamp": "2024-08-16T12:51:00.467699+00:00"
+  },
+  {
+    "name": "Daniel Afolabi",
+    "text": "Happy weekend guys :rocket: ",
+    "timestamp": "2024-08-17T10:08:27.280969+00:00"
+  },
+  {
+    "name": "alejandro",
+    "text": "Hey <!channel>,sorry for the radio silence. Customer has been doing well. Been fully focused on sales since we need to get new customers through the door. I've been testing the idea of colleges, as an AI-powered career coach. Been seeing some good initial results. Will keep you all posted on progress, hope you're all doing well!",
+    "timestamp": "2024-08-27T20:47:09.512619+00:00"
+  },
+  {
+    "name": "Daniel Afolabi",
+    "text": "Great work Ale :rocket: ",
+    "timestamp": "2024-08-28T09:08:54.070599+00:00"
+  },
+  {
+    "name": "alejandro",
+    "text": "Hey all, wanted to share another update. Still working 110% on the sales side, so don't foresee any development/design work in the near future. If that changes I'll let you know asap. My goal is still to get enough traction where there's enough full-time dev work, but that won't happen in near future (i.e. next few months). If I can help in the meantime with reviews on Upwork or being a reference please let me know.",
+    "timestamp": "2024-09-04T21:13:45.451019+00:00"
+  },
+  {
+    "name": "Moses Ubah",
+    "text": "Hi Ale, It\u2019s great to hear that you're working earnestly on the sales side. I understand that generating sales can be challenging, and I\u2019m rooting for Ekho.",
+    "timestamp": "2024-09-05T13:55:27.412259+00:00"
+  },
+  {
+    "name": "Daniel Afolabi",
+    "text": "Thanks for the update! Wishing you the best of luck with the sales push.:rocket:",
+    "timestamp": "2024-09-05T17:27:09.609139+00:00"
+  },
+  {
+    "name": "Razi Khan",
+    "text": "Thanks for the update, @alejandro! Wishing you the best with the sales push. Ekho all the way!",
+    "timestamp": "2024-09-06T08:49:13.497249+00:00"
+  },
+  {
+    "name": "Mike Estaris",
+    "text": "@Mike Estaris has joined the channel",
+    "timestamp": "2024-09-09T05:02:02.730099+00:00"
+  },
+  {
+    "name": "Mojtaba Zare",
+    "text": "@Mojtaba Zare has joined the channel",
+    "timestamp": "2024-10-16T18:28:31.820949+00:00"
+  },
+  {
+    "name": "Nandini",
+    "text": "@Nandini has joined the channel",
+    "timestamp": "2024-11-07T11:36:16.350729+00:00"
+  },
+  {
+    "name": "Simon Swedlund",
+    "text": "@Simon Swedlund has joined the channel",
+    "timestamp": "2024-11-07T14:55:35.868729+00:00"
+  },
+  {
+    "name": "Rana Waqas",
+    "text": "@Rana Waqas has joined the channel",
+    "timestamp": "2025-01-31T16:34:30.522619+00:00"
+  },
+  {
+    "name": "Silas Sabino",
+    "text": "@Silas Sabino has joined the channel",
+    "timestamp": "2025-02-07T15:02:34.880929+00:00"
+  },
+  {
+    "name": "Jan Denver GImenez",
+    "text": "@Jan Denver GImenez has joined the channel",
+    "timestamp": "2025-02-07T23:40:50.209249+00:00"
+  },
+  {
+    "name": "Luc\u00eda Canduelas",
+    "text": "@Luc\u00eda Canduelas has joined the channel",
+    "timestamp": "2025-03-18T17:53:44.488399+00:00"
+  },
+  {
+    "name": "vatsala singh",
+    "text": "@vatsala singh has joined the channel",
+    "timestamp": "2025-05-05T12:51:47.817749+00:00"
+  },
+  {
+    "name": "Rishabh Rastogi",
+    "text": "@Rishabh Rastogi has joined the channel",
+    "timestamp": "2025-05-06T15:58:43.901169+00:00"
+  },
+  {
+    "name": "Glenn",
+    "text": "@Glenn has joined the channel",
+    "timestamp": "2025-05-16T19:20:25.472379+00:00"
+  },
+  {
+    "name": "Rana Waqas",
+    "text": "@Rana Waqas has joined the channel",
+    "timestamp": "2025-05-16T20:34:57.202139+00:00"
+  },
+  {
+    "name": "Vatsala Singh",
+    "text": "@Vatsala Singh has joined the channel",
+    "timestamp": "2025-05-19T04:08:09.204279+00:00"
+  },
+  {
+    "name": "Rishabh Rastogi",
+    "text": "@Rishabh Rastogi has joined the channel",
+    "timestamp": "2025-05-19T12:57:58.100579+00:00"
+  },
+  {
+    "name": "Glenn",
+    "text": "@Glenn has joined the channel",
+    "timestamp": "2025-05-20T15:00:57.143709+00:00"
+  },
+  {
+    "name": "Jorge Razo",
+    "text": "@Jorge Razo has joined the channel",
+    "timestamp": "2025-05-22T17:45:20.031099+00:00"
+  },
+  {
+    "name": "Powerful app",
+    "text": "@Powerful app has joined the channel",
+    "timestamp": "2025-06-17T10:27:34.902629+00:00"
+  },
+  {
+    "name": "Rana Waqas",
+    "text": "@Powerful app app ping",
+    "timestamp": "2025-06-17T13:20:12.784909+00:00",
+    "sub-messages": [
       {
-        "type": "rich_text",
-        "block_id": "DQmkG",
-        "elements": [
-          {
-            "type": "rich_text_section",
-            "elements": [
-              {
-                "type": "text",
-                "text": "Just spoke to each one of you "
-              },
-              {
-                "type": "broadcast",
-                "range": "channel"
-              },
-              {
-                "type": "text",
-                "text": ". Wanted to thank you all for the great work so far, we built something really cool in a very short time window. There's a good movie I watched yesterday called \"The Boys in the Boat\" which is about a true story of an 8-person rowing team and all their sudden successes. In the movie they highlight how the most important piece behind their success is not how good each rower was, but how the boat moved as 1 not as 8 individual people. I think a lot of our success so far has come from moving as 1, not 4 individuals, through all the standups and challenges. We all leaned into a team mentality and it clearly paid off.\n\nTheir will be less dev and design work over the next few months. We'll still want to problem solve and add key features we identify based on customer feedback. The main focus will be however on GTM, i.e. selling what we have, which I'll be leading. I'll for sure be using Ekho to practice. Our goal there is to get 2-3 more paying betas this year, with 2+ of those converting to annual customers. This should give us enough traction to hopefully transition full-time by end of year/early next.\n\nThis is only the start. Thanks for the hard work.\n\nQuote of the day (from the book The Boys in the Boat): \"All were merged into one smoothly working machine; they were, in fact, a poem of motion, a symphony of swinging blades.\u201d"
-              }
-            ]
-          }
-        ]
+        "name": "Powerful app",
+        "text": "Pong!",
+        "timestamp": "2025-06-17T13:20:17.787669+00:00"
       }
-    ],
-    "reactions": [
+    ]
+  },
+  {
+    "name": "Rana Waqas",
+    "text": "@Powerful app do you know the history the history of this channel?",
+    "timestamp": "2025-06-17T13:20:47.155209+00:00",
+    "sub-messages": [
       {
-        "name": "100",
-        "users": [
-          "U078E5TJE3G",
-          "U078S8B0D9U",
-          "U078P1865AQ"
-        ],
-        "count": 3
+        "name": "Powerful app",
+        "text": "I have access to the channel's join logs. Let me summarize the history of this channel for you:\n\n**Oldest join:** October 16, 2024 - Mojtaba Zare (U07S6HYDEAW) joined the channel.\n\n**Next oldest joins:**\n\n* September 9, 2024 - Mike Estaris (U07LGRVPCSE) joined the channel.\n* November 7, 2024 - Simon Swedlund (U07VAFDLZ6X) and Nandini (U07V308ERM4) joined the channel.\n\n**More joins:**\n\n* January 31, 2025 - Rana Waqas (U08AT7AQG4X) joined the channel.\n* February 7, 2025 - Jan Denver GImenez (U08CCSEAGQ3) and Silas Sabino (U08BVNP16LX) joined the channel.\n* May 5, 2025 - Rishabh Rastogi (U08R847AYLU) and vatsala singh (U08QQNHFLES) joined the channel.\n* May 16, 2025 - Rana Waqas (U08T62ERGGZ) and Glenn (U08SF0KRZ46) joined the channel.\n* May 19, 2025 - Vatsala Singh (U08TPL7AFEU) and Glenn (U08SJ4D7C5V) joined the channel.\n* May 20, 2025 - Glenn (U08T53TV30V) joined the channel.\n* May 22, 2025 - Jorge Razo (U08TEA2U2CD) joined the channel.\n* June 17, 2025 - Powerful app (U091TRJH5M2) joined the channel (invited by Rana Waqas (U08T62ERGGZ)).\n\nLet me know if you'd like more information!",
+        "timestamp": "2025-06-17T13:20:53.329029+00:00"
+      }
+    ]
+  },
+  {
+    "name": "Rana Waqas",
+    "text": "@Powerful app can you tell me something interesting from this channel?",
+    "timestamp": "2025-06-17T13:21:36.633839+00:00",
+    "sub-messages": [
+      {
+        "name": "Powerful app",
+        "text": "After reviewing the channel history, I found that:\n\n**There are multiple users with the same username!**\n\nFor example, I found two users with the username\" \"Glenn\" (U08TEA2U2 and U08SF0KRZ46) and two users with the username \"Rishabh Rastogi\" (U08TPL7AFEU and U08R847AYLU). Similarly, there are two users with the username \"Rana Waqas\" (U08T62ERGGZ and U08AT7AQG4X).\n\nThis might indicate that the channel allows multiple users to have the same username, or perhaps it's a bug that needs to be addressed.\n\nWould you like me to dig deeper or is there anything else you'd like to know about this channel?",
+        "timestamp": "2025-06-17T13:21:41.921829+00:00"
       },
       {
-        "name": "rocket",
-        "users": [
-          "U078P1865AQ"
-        ],
-        "count": 1
+        "name": "Rana Waqas",
+        "text": "@Powerful app Can you summarize what was being said in this group",
+        "timestamp": "2025-06-17T13:25:00.230039+00:00"
+      },
+      {
+        "name": "Powerful app",
+        "text": "After reviewing the conversation history, it appears that this is a channel join log, where various users have joined the channel at different times. There is no actual conversation or discussion taking place. Each message is simply a notification indicating that a user has joined the channel.\n\nIf you'd like, I can help you with something else, such as identifying the usernames of the users who joined the channel. Just let me know!",
+        "timestamp": "2025-06-17T13:25:22.063899+00:00"
       }
-    ],
-    "username": "alejandro",
-    "iso_time": "2024-08-15T10:30:48.345519+00:00"
+    ]
   },
   {
-    "user": "U078S8B0D9U",
-    "type": "message",
-    "ts": "1723714375.819599",
-    "client_msg_id": "434c95ad-738a-4fb0-a27f-5014d2c2dcd1",
-    "text": "There is no link to join the call",
-    "team": "T078FHP1885",
-    "blocks": [
+    "name": "alejandro",
+    "text": "@Powerful app what was the last feature we shipped?",
+    "timestamp": "2025-06-17T13:36:06.213279+00:00",
+    "sub-messages": [
       {
-        "type": "rich_text",
-        "block_id": "ZaHxs",
-        "elements": [
-          {
-            "type": "rich_text_section",
-            "elements": [
-              {
-                "type": "text",
-                "text": "There is no link to join the call"
-              }
-            ]
-          }
-        ]
-      }
-    ],
-    "reactions": [
+        "name": "Powerful app",
+        "text": "I'm not aware of any specific features that were shipped. The context provided only contains a list of channel join messages with user IDs, usernames, and timestamps. It doesn't appear to be related to feature development or shipping. If you could provide more context or clarify what you're looking for, I'll do my best to assist you.",
+        "timestamp": "2025-06-17T13:36:11.191129+00:00"
+      },
       {
-        "name": "+1",
-        "users": [
-          "U078BRKFXBQ"
-        ],
-        "count": 1
-      }
-    ],
-    "username": "Moses Ubah",
-    "iso_time": "2024-08-15T09:32:55.819599+00:00"
-  },
-  {
-    "user": "U078S8B0D9U",
-    "type": "message",
-    "ts": "1723661250.579069",
-    "client_msg_id": "E5A120CB-EDC9-4D43-8D0F-15322BB8D814",
-    "text": "Speak to you tomorrow ",
-    "team": "T078FHP1885",
-    "blocks": [
+        "name": "alejandro",
+        "text": "@Rana Waqas what part of the channel is being indexed?",
+        "timestamp": "2025-06-17T13:36:39.526539+00:00"
+      },
       {
-        "type": "rich_text",
-        "block_id": "R/2m2",
-        "elements": [
-          {
-            "type": "rich_text_section",
-            "elements": [
-              {
-                "type": "text",
-                "text": "Speak to y"
-              },
-              {
-                "type": "text",
-                "text": "ou "
-              },
-              {
-                "type": "text",
-                "text": "tomo"
-              },
-              {
-                "type": "text",
-                "text": "rrow"
-              },
-              {
-                "type": "text",
-                "text": " "
-              }
-            ]
-          }
-        ]
-      }
-    ],
-    "reactions": [
+        "name": "Rana Waqas",
+        "text": "For now I just did 30 messages",
+        "timestamp": "2025-06-17T13:37:02.865819+00:00"
+      },
       {
-        "name": "+1",
-        "users": [
-          "U078BRKFXBQ"
-        ],
-        "count": 1
-      }
-    ],
-    "username": "Moses Ubah",
-    "iso_time": "2024-08-14T18:47:30.579069+00:00"
-  },
-  {
-    "user": "U078BRKFXBQ",
-    "type": "message",
-    "ts": "1723660832.367189",
-    "client_msg_id": "c421a838-8ad8-42a1-b0e1-352bdb266b23",
-    "text": "Sent you all the 1-1 calendar invites for tomorrow cc <@U078E5TJE3G> <@U078S8B0D9U> <@U078P1865AQ> See you then",
-    "team": "T078FHP1885",
-    "blocks": [
+        "name": "Rana Waqas",
+        "text": "which are mostly users joining.",
+        "timestamp": "2025-06-17T13:37:24.958589+00:00"
+      },
       {
-        "type": "rich_text",
-        "block_id": "fyTej",
-        "elements": [
-          {
-            "type": "rich_text_section",
-            "elements": [
-              {
-                "type": "text",
-                "text": "Sent you all the 1-1 calendar invites for tomorrow cc "
-              },
-              {
-                "type": "user",
-                "user_id": "U078E5TJE3G"
-              },
-              {
-                "type": "text",
-                "text": " "
-              },
-              {
-                "type": "user",
-                "user_id": "U078S8B0D9U"
-              },
-              {
-                "type": "text",
-                "text": " "
-              },
-              {
-                "type": "user",
-                "user_id": "U078P1865AQ"
-              },
-              {
-                "type": "text",
-                "text": " See you then"
-              }
-            ]
-          }
-        ]
-      }
-    ],
-    "reactions": [
+        "name": "alejandro",
+        "text": "Why not everything in channel? I'm sure there's some technical limitation, just curious",
+        "timestamp": "2025-06-17T13:38:13.241169+00:00"
+      },
       {
-        "name": "+1",
-        "users": [
-          "U078S8B0D9U",
-          "U078P1865AQ",
-          "U078E5TJE3G"
-        ],
-        "count": 3
-      }
-    ],
-    "username": "alejandro",
-    "iso_time": "2024-08-14T18:40:32.367189+00:00"
-  },
-  {
-    "user": "U078S8B0D9U",
-    "type": "message",
-    "ts": "1723632319.199669",
-    "client_msg_id": "EAA9776F-8D37-44FC-9E7C-6A93F38B56B2",
-    "text": "Okay I will push now",
-    "team": "T078FHP1885",
-    "blocks": [
+        "name": "alejandro",
+        "text": "Cool app",
+        "timestamp": "2025-06-17T13:38:15.372059+00:00"
+      },
       {
-        "type": "rich_text",
-        "block_id": "Uc1xY",
-        "elements": [
-          {
-            "type": "rich_text_section",
-            "elements": [
-              {
-                "type": "text",
-                "text": "Okay I will push now"
-              }
-            ]
-          }
-        ]
-      }
-    ],
-    "reactions": [
+        "name": "alejandro",
+        "text": "I want to use it ourselves lol",
+        "timestamp": "2025-06-17T13:38:28.054909+00:00"
+      },
       {
-        "name": "pray",
-        "users": [
-          "U078BRKFXBQ"
-        ],
-        "count": 1
+        "name": "Rana Waqas",
+        "text": "Was just taking too much time while i am writing code and testing",
+        "timestamp": "2025-06-17T13:38:40.330189+00:00"
+      },
+      {
+        "name": "alejandro",
+        "text": "Makes sense, we probably have enough for Brief then?",
+        "timestamp": "2025-06-17T13:39:01.797289+00:00"
+      },
+      {
+        "name": "alejandro",
+        "text": "And what takes time, indexing?",
+        "timestamp": "2025-06-17T13:39:07.268939+00:00"
+      },
+      {
+        "name": "Rana Waqas",
+        "text": "Yes, i will update the sections shortly",
+        "timestamp": "2025-06-17T13:39:21.825409+00:00"
       }
-    ],
-    "username": "Moses Ubah",
-    "iso_time": "2024-08-14T10:45:19.199669+00:00"
+    ]
   }
 ]
