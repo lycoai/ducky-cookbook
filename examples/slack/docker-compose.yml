@@ -3,7 +3,7 @@ services:
   web:
     build: .
     ports:
-      - "8000:8000"
+      - "8005:8000"
     volumes:
       - ./src:/app/src # Mount the src directory for live reloading
     env_file:
