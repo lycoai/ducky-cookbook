@@ -27,17 +27,53 @@ channel_history_file_path = "data/channel_history_enriched.json"
 channel_history_content = ""
 # Open the channel_history_enriched.json file in read mode with utf-8 encoding
 with open(channel_history_file_path, 'r', encoding='utf-8') as f:
-    # Load the JSON data
     json_data = json.load(f)
-    # Convert the JSON data to a string to be indexed
-    channel_history_content = json.dumps(json_data)
+    seen = set()
+    for idx, msg in enumerate(json_data):
+        # Skip empty or system messages
+        text = msg.get("text", "").strip() if "text" in msg else ""
+        if not text or "has joined the channel" in text or "has left the channel" in text:
+            continue
+        # Deduplication by text and timestamp
+        dedup_key = (text, msg.get("timestamp"))
+        if dedup_key in seen:
+            continue
+        seen.add(dedup_key)
+        # Metadata enrichment
+        metadata = {
+            "timestamp": msg.get("timestamp"),
+            "author": msg.get("name"),
+            "thread_id": f"thread_{idx}",
+            "type": "message"
+        }
+        # Index the main message
+        client.documents.index(
+            index_name=ducky_index_name,
+            content=text,
+            metadata=metadata,
+        )
+        # Handle sub-messages if present
+        for sub in msg.get("sub-messages", []):
+            sub_text = sub.get("text", "").strip()
+            if not sub_text:
+                continue
+            sub_dedup_key = (sub_text, sub.get("timestamp"))
+            if sub_dedup_key in seen:
+                continue
+            seen.add(sub_dedup_key)
+            sub_metadata = {
+                "timestamp": sub.get("timestamp"),
+                "author": sub.get("name"),
+                "parent_id": msg.get("timestamp"),
+                "thread_id": f"thread_{idx}",
+                "type": "reply"
+            }
+            # Optionally prepend parent text for context
+            content = f"Context: {text}\nReply: {sub_text}"
+            client.documents.index(
+                index_name=ducky_index_name,
+                content=content,
+                metadata=sub_metadata,
+            )
 
-# Index the channel history document using the Ducky AI client
-client.documents.index(
-    # Specify the name of the index, this can be found in the Ducky AI dashboard
-    index_name=ducky_index_name,
-    # Provide the content to be indexed
-    content=channel_history_content,
-)
-
-print(f"Successfully indexed content from {channel_history_file_path} to index {ducky_index_name}")
+print(f"Successfully indexed chunked and enriched content from {channel_history_file_path} to index {ducky_index_name}")

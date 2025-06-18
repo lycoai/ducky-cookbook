@@ -39,7 +39,7 @@ async def chat(msg: ChatMessage):
             model=os.getenv("GROQ_MODEL_NAME", "llama3-70b-8192"),
             messages=[
                 {"role": "system",
-                 "content": f"You are a helpful assistant.\nContext: {ctx}"},
+                 "content": f"You are a Slack assistant. Consider the entire conversation history from this Slack channel to provide a relevant and helpful answer. Conversation history: {ctx}"},
                 {"role": "user", "content": msg.message}
             ]
         )
