@@ -32,7 +32,7 @@ class ChatMessage(BaseModel):
 
 @app.post("/chat")
 async def chat(msg: ChatMessage):
-    docs = client.documents.retrieve(index_name=index, query=msg.message, top_k=1)
+    docs = client.documents.retrieve(index_name=index, query=msg.message, top_k=20)
     if docs.documents:
         ctx = " ".join(docs.documents[0].content_chunks or [])
         completion = groq_cl.chat.completions.create(
