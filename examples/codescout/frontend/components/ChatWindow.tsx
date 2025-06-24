@@ -1,13 +1,13 @@
-import { useForm } from 'react-hook-form'
-import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useChat } from '../hooks/useChat'
+import { useForm } from 'react-hook-form'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism'
+import { z } from 'zod'
+import { useChat } from '../hooks/useChat'
 
 // Define schema for form validation
 const questionSchema = z.object({
-  question: z.string().min(1, 'Question cannot be empty'),
+  question: z.string().min(1, 'Question cannot be empty')
 })
 
 type QuestionFormData = z.infer<typeof questionSchema>
@@ -34,7 +34,7 @@ const renderMessageContent = (content: string) => {
           customStyle={{
             borderRadius: '0.5rem',
             padding: '1rem',
-            marginBottom: '1rem',
+            marginBottom: '1rem'
           }}
         >
           {code} LEONEL
@@ -53,16 +53,16 @@ const renderMessageContent = (content: string) => {
 export function ChatWindow({
   selectedIndex,
   setShowAnalyzeBox,
-  showAnalyzeBox,
+  showAnalyzeBox
 }: Readonly<ChatWindowProps>) {
   const { messages, isLoading, sendMessage } = useChat({
-    indexName: selectedIndex,
+    indexName: selectedIndex
   })
   const questionForm = useForm<QuestionFormData>({
     resolver: zodResolver(questionSchema),
     defaultValues: {
-      question: '',
-    },
+      question: ''
+    }
   })
 
   const handleQuestionSubmit = async (data: QuestionFormData) => {
@@ -141,7 +141,7 @@ export function ChatWindow({
           <button
             type="submit"
             disabled={isLoading}
-            className="absolute right-2 bottom-2 mb-[8px] flex h-10 w-10 cursor-pointer items-center justify-center rounded-xl text-white disabled:cursor-not-allowed disabled:opacity-50"
+            className="absolute right-2 bottom-[9px] mb-[8px] flex h-10 w-10 cursor-pointer items-center justify-center rounded-xl text-white disabled:cursor-not-allowed disabled:opacity-50"
           >
             {isLoading ? (
               <svg className="h-5 w-5 animate-spin" viewBox="0 0 24 24">
