@@ -70,33 +70,26 @@ export function ChatWindow({
     await sendMessage(data.question)
   }
 
-  const mockMessages = [
-    {
-      id: '1750789947966',
-      type: 'user',
-      content: 'how can i format a date in ptbr?'
-    },
-    {
-      id: '1750789957932',
-      type: 'assistant',
-      content:
-        "In the provided codebase context, it seems that there are locale-specific formatting files for different regions like `ar-MA`, `ar-DZ`, and `ar-SA` under the `src/locale` directory. However, there is no specific locale for Portuguese (ptbr) mentioned in the directories provided.\n\nTo format a date in Portuguese (ptbr), you would typically need a locale file specifically for Portuguese in the codebase. This locale file would contain the necessary formatting rules and patterns for dates in the Portuguese language.\n\nIf the codebase does not currently support Portuguese (ptbr) in the provided directories, you may need to create a new locale directory for Portuguese and add a `formatLong` file within that directory. This `formatLong` file would define how dates should be formatted in the Portuguese locale.\n\nHere's a conceptual example of how you might structure a Portuguese locale file for date formatting:\n\n### src/locale/pt-BR/_lib/formatLong/index.ts\n\n```typescript\nconst formats = {\n  date: {\n    fullDate: 'dd/MM/yyyy',\n    longDate: 'dd MMMM yyyy',\n    mediumDate: 'dd MMM yyyy',\n    shortDate: 'dd/MM/yy',\n  },\n  time: {\n    fullTime: 'HH:mm:ss',\n    longTime: 'HH:mm:ss z',\n    mediumTime: 'HH:mm:ss',\n    shortTime: 'HH:mm',\n  },\n};\n\nexport default formats;\n```\n\nAfter adding this locale file for Portuguese (ptbr), you can then use it in the codebase to format dates according to Portuguese formatting rules."
-    },
-    {
-      id: '4124124',
-      type: 'user',
-      content: 'how can i test whatea m,asn flkansf'
-    },
-    {
-      id: '1241241',
-      type: 'assistant',
-      content: 'testkjbn;jbbmn jiabsni;gbasilgb blajsg auh gjlah sulh vl'
+  const handleAutoResize = (e: React.FormEvent<HTMLTextAreaElement>) => {
+    const target = e.currentTarget
+    target.style.height = 'auto' // reset before calculating
+    target.style.height = Math.min(target.scrollHeight, 200) + 'px' // cap at 200px
+  }
+
+  const onEnterSubmit = async (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault()
+
+      const target = e.currentTarget
+      const currentValue = target.value
+      target.style.height = 'auto'
+      if (currentValue.trim()) {
+        await questionForm.handleSubmit(handleQuestionSubmit)()
+      }
     }
-  ]
+  }
 
-  const chatStarted = mockMessages.length > 0
-
-  console.log(messages)
+  const chatStarted = messages.length > 0
 
   return (
     <div className="flex max-w-[644px] flex-1 flex-col justify-center overflow-hidden gap-10">
@@ -105,7 +98,7 @@ export function ChatWindow({
         <div>
           {chatStarted ? (
             <div>
-              {mockMessages.map((message) => (
+              {messages.map((message) => (
                 <div
                   key={message.id}
                   className={`flex ${message.type === 'user' ? 'justify-end' : 'justify-start'}`}
@@ -127,7 +120,7 @@ export function ChatWindow({
                 <h1 className="text-[32px] md:text-[46px] font-bold text-white leading-[115%]">
                   Explore {selectedIndex} repository
                 </h1>
-                <p className="text-lg text-[var(--gray)] leading-[145%]">
+                <p className="text-lg text-[var(--gray)] leading-[145%] font-medium">
                   Ask questions about the repository. I can help you understand
                   implementation details, code structure, and functionality.
                 </p>
@@ -147,22 +140,10 @@ export function ChatWindow({
           <textarea
             {...questionForm.register('question')}
             placeholder={`Ask anything...`}
-            className="max-h-[200px] min-h-[60px] w-full resize-none rounded-lg border-none bg-[#FFFFFF24] py-[18px] pr-20 pl-6 text-[18px] text-white placeholder-white/70 shadow-none transition-colors duration-[240ms] outline-none hover:bg-[#FFFFFF33] focus:bg-[#FFFFFF33] disabled:cursor-not-allowed disabled:opacity-50"
+            className="max-h-[200px] min-h-[60px] w-full resize-none rounded-lg border-none bg-[#FFFFFF24] py-[18px] pr-20 pl-6 text-[18px] text-white placeholder-white/70 shadow-none transition-colors duration-[240ms] outline-none hover:bg-[#FFFFFF33] focus:bg-[#FFFFFF33] disabled:cursor-not-allowed disabled:opacity-50 font-medium"
             rows={1}
-            onInput={(e) => {
-              const target = e.currentTarget
-              target.style.height = 'auto'
-              target.style.height = Math.min(target.scrollHeight, 200) + 'px'
-            }}
-            onKeyDown={async (e) => {
-              if (e.key === 'Enter' && !e.shiftKey) {
-                e.preventDefault()
-                const currentValue = e.currentTarget.value
-                if (currentValue.trim()) {
-                  questionForm.handleSubmit(handleQuestionSubmit)()
-                }
-              }
-            }}
+            onInput={handleAutoResize}
+            onKeyDown={onEnterSubmit}
           />
           <button
             type="submit"
@@ -216,7 +197,9 @@ export function ChatWindow({
 
       <span
         onClick={() => setShowAnalyzeBox(!showAnalyzeBox)}
-        className="text-white text-lg font-medium leading-[145%] underline decoration-auto underline-offset-auto text-center md:hidden"
+        className={`text-white text-lg font-medium leading-[145%] underline decoration-auto underline-offset-auto text-center md:hidden ${
+          chatStarted ? 'hidden' : ''
+        }`}
       >
         Analyze your document
       </span>
