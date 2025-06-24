@@ -16,7 +16,7 @@
     "dotenv": "^16.5.0",
     "duckyai-ts": "^1.1.0",
     "express": "^5.1.0",
-    "openai": "^4.96.2",
+    "openai": "^5.7.0",
     "zod": "^3.24.3"
   },
   "devDependencies": {
