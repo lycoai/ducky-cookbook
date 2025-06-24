@@ -15,7 +15,7 @@ export function RecentDocuments({
   setSelectedIndex,
   setIsSubmitted,
   isLoadingIndexes,
-  indexError,
+  indexError
 }: Readonly<RecentDocumentsProps>) {
   return (
     <div className="flex h-full flex-col">
@@ -59,7 +59,7 @@ export function RecentDocuments({
                     setSelectedIndex(index.index_name)
                     setIsSubmitted(true)
                   }}
-                  className={`cursor-pointer text-left text-[18px] leading-[145%] font-medium transition-colors duration-[240ms] md:text-right ${selectedIndex === index.index_name ? 'text-white' : 'text-[var(--gray)] hover:text-white'}`}
+                  className={`cursor-pointer text-left text-[18px] leading-[145%] font-medium transition-colors duration-[240ms] md:text-left ${selectedIndex === index.index_name ? 'text-white' : 'text-[var(--gray)] hover:text-white'}`}
                 >
                   {index.index_name === 'tiktok-com' && (
                     <span
