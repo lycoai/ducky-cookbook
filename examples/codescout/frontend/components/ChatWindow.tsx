@@ -43,7 +43,7 @@ const renderMessageContent = (content: string) => {
     }
 
     return (
-      <p key={index} className="whitespace-pre-wrap mb-2 last:mb-0">
+      <p key={index} className="whitespace-pre-wrap mb-2 last:mb-0 w-full">
         {part.trim()}
       </p>
     )
@@ -70,7 +70,33 @@ export function ChatWindow({
     await sendMessage(data.question)
   }
 
-  const chatStarted = messages.length > 0
+  const mockMessages = [
+    {
+      id: '1750789947966',
+      type: 'user',
+      content: 'how can i format a date in ptbr?'
+    },
+    {
+      id: '1750789957932',
+      type: 'assistant',
+      content:
+        "In the provided codebase context, it seems that there are locale-specific formatting files for different regions like `ar-MA`, `ar-DZ`, and `ar-SA` under the `src/locale` directory. However, there is no specific locale for Portuguese (ptbr) mentioned in the directories provided.\n\nTo format a date in Portuguese (ptbr), you would typically need a locale file specifically for Portuguese in the codebase. This locale file would contain the necessary formatting rules and patterns for dates in the Portuguese language.\n\nIf the codebase does not currently support Portuguese (ptbr) in the provided directories, you may need to create a new locale directory for Portuguese and add a `formatLong` file within that directory. This `formatLong` file would define how dates should be formatted in the Portuguese locale.\n\nHere's a conceptual example of how you might structure a Portuguese locale file for date formatting:\n\n### src/locale/pt-BR/_lib/formatLong/index.ts\n\n```typescript\nconst formats = {\n  date: {\n    fullDate: 'dd/MM/yyyy',\n    longDate: 'dd MMMM yyyy',\n    mediumDate: 'dd MMM yyyy',\n    shortDate: 'dd/MM/yy',\n  },\n  time: {\n    fullTime: 'HH:mm:ss',\n    longTime: 'HH:mm:ss z',\n    mediumTime: 'HH:mm:ss',\n    shortTime: 'HH:mm',\n  },\n};\n\nexport default formats;\n```\n\nAfter adding this locale file for Portuguese (ptbr), you can then use it in the codebase to format dates according to Portuguese formatting rules."
+    },
+    {
+      id: '4124124',
+      type: 'user',
+      content: 'how can i test whatea m,asn flkansf'
+    },
+    {
+      id: '1241241',
+      type: 'assistant',
+      content: 'testkjbn;jbbmn jiabsni;gbasilgb blajsg auh gjlah sulh vl'
+    }
+  ]
+
+  const chatStarted = mockMessages.length > 0
+
+  console.log(messages)
 
   return (
     <div className="flex max-w-[644px] flex-1 flex-col justify-center overflow-hidden gap-10">
@@ -78,14 +104,14 @@ export function ChatWindow({
       <div className={`${chatStarted ? 'flex-1 overflow-y-auto pt-6' : ''}`}>
         <div>
           {chatStarted ? (
-            <div className="space-y-6">
-              {messages.map((message) => (
+            <div>
+              {mockMessages.map((message) => (
                 <div
                   key={message.id}
                   className={`flex ${message.type === 'user' ? 'justify-end' : 'justify-start'}`}
                 >
                   <div
-                    className={`w-full rounded-2xl px-4 py-2 text-white ${message.type === 'user' ? 'bg-[#FFFFFF24]' : 'bg-transparent'}`}
+                    className={`max-w-[540px] w-full rounded-2xl text-white gap-4 ${message.type === 'user' ? 'bg-[#FFFFFF24] px-4 py-3 mb-4' : 'bg-transparent mb-8'}`}
                   >
                     <div className="whitespace-pre-wrap text-white">
                       {renderMessageContent(message.content)}

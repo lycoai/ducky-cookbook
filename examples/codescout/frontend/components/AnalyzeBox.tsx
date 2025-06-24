@@ -71,7 +71,7 @@ export function AnalyzeBox({
           rel="noopener noreferrer"
           className="text-sm text-[var(--gray)] transition-colors duration-[240ms] hover:text-white font-medium"
         >
-          Built with Ducky 23
+          Built with Ducky
         </a>
       </div>
       <div
