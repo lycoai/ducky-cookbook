@@ -111,7 +111,7 @@ export function ChatWindow({
                   className={`flex ${message.type === 'user' ? 'justify-end' : 'justify-start'}`}
                 >
                   <div
-                    className={`max-w-[540px] w-full rounded-2xl text-white gap-4 ${message.type === 'user' ? 'bg-[#FFFFFF24] px-4 py-3 mb-4' : 'bg-transparent mb-8'}`}
+                    className={`max-w-[540px] w-full rounded-2xl text-white gap-4 ${message.type === 'user' ? 'bg-[#FFFFFF24] px-4 py-3 mb-6' : 'bg-transparent mb-10'}`}
                   >
                     <div className="whitespace-pre-wrap text-white">
                       {renderMessageContent(message.content)}
