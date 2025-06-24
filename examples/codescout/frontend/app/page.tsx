@@ -1,13 +1,13 @@
 'use client'
 
-import { useState, useEffect } from 'react'
-import { DuckyIndex } from '@/types/ducky'
-import { ChatWindow } from '@/components/ChatWindow'
-import { getIndexes } from '@/services'
 import { AnalyzeBox } from '@/components/AnalyzeBox'
+import { ChatWindow } from '@/components/ChatWindow'
 import { RecentDocuments } from '@/components/RecentDocuments'
-import { AnimatePresence, motion } from 'framer-motion'
+import { getIndexes } from '@/services'
+import { DuckyIndex } from '@/types/ducky'
 import { XMarkIcon } from '@heroicons/react/24/outline'
+import { AnimatePresence, motion } from 'framer-motion'
+import { useEffect, useState } from 'react'
 
 export default function Home() {
   const [isSubmitted, setIsSubmitted] = useState(false)
@@ -51,9 +51,9 @@ export default function Home() {
           href="https://www.ducky.ai"
           target="_blank"
           rel="noopener noreferrer"
-          className="text-sm text-[var(--gray)] transition-colors duration-[240ms] hover:text-white"
+          className="text-sm text-[var(--gray)] transition-colors duration-[240ms] hover:text-white font-medium"
         >
-          Built with Ducky
+          Built with Ducky 23
         </a>
       </div>
       {/* Show indexes on mobile as horizontal scroll */}
@@ -135,7 +135,7 @@ export default function Home() {
               stiffness: 400,
               damping: 40,
               mass: 1,
-              type: 'spring',
+              type: 'spring'
             }}
           >
             <XMarkIcon

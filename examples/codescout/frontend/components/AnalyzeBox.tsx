@@ -1,11 +1,11 @@
-import { useForm } from 'react-hook-form'
-import { z } from 'zod'
+import { processRepository } from '@/services'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useState } from 'react'
-import { processRepository } from '@/services'
+import { useForm } from 'react-hook-form'
+import { z } from 'zod'
 
 const urlSchema = z.object({
-  url: z.string().url('Please enter a valid URL'),
+  url: z.string().url('Please enter a valid URL')
 })
 
 type UrlFormData = z.infer<typeof urlSchema>
@@ -20,7 +20,7 @@ interface SidebarProps {
 export function AnalyzeBox({
   setSelectedIndex,
   fetchIndexes,
-  setIsSubmitted,
+  setIsSubmitted
 }: Readonly<SidebarProps>) {
   const [isProcessing, setIsProcessing] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -28,8 +28,8 @@ export function AnalyzeBox({
   const urlForm = useForm<UrlFormData>({
     resolver: zodResolver(urlSchema),
     defaultValues: {
-      url: '',
-    },
+      url: ''
+    }
   })
 
   const handleUrlSubmit = async (data: UrlFormData) => {
@@ -55,7 +55,7 @@ export function AnalyzeBox({
       console.error(err)
       setIsProcessing(false)
       setError(
-        err instanceof Error ? err.message : 'Failed to process the document',
+        err instanceof Error ? err.message : 'Failed to process the document'
       )
       throw err
     }
@@ -69,9 +69,9 @@ export function AnalyzeBox({
           href="https://www.ducky.ai"
           target="_blank"
           rel="noopener noreferrer"
-          className="text-sm text-[var(--gray)] transition-colors duration-[240ms] hover:text-white"
+          className="text-sm text-[var(--gray)] transition-colors duration-[240ms] hover:text-white font-medium"
         >
-          Built with Ducky
+          Built with Ducky 23
         </a>
       </div>
       <div
