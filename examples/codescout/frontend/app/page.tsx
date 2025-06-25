@@ -141,19 +141,6 @@ export default function Home() {
           </motion.div>
         )}
       </AnimatePresence>
-
-      <div className="safe-area-inset-top pb-6 flex justify-center md:hidden">
-        <a
-          href="https://www.ducky.ai"
-          target="_blank"
-          rel="noopener noreferrer"
-          className={`text-sm text-[var(--gray)] transition-colors duration-[240ms] hover:text-white font-medium ${
-            !selectedIndex ? 'flex' : 'hidden'
-          }`}
-        >
-          Built with Ducky
-        </a>
-      </div>
     </main>
   )
 }

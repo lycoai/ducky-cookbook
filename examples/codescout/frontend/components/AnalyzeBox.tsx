@@ -78,10 +78,13 @@ export function AnalyzeBox({
         className="w-full p-6 shadow-xl rounded-t-2xl md:rounded-2xl"
         style={{ background: 'var(--blue)', padding: 24 }}
       >
-        <form onSubmit={urlForm.handleSubmit(handleUrlSubmit)}>
-          <div className="mb-4 text-lg font-medium text-white">
+        <form
+          onSubmit={urlForm.handleSubmit(handleUrlSubmit)}
+          className="flex flex-col gap-4"
+        >
+          <p className="text-lg font-medium text-white leading-[145%]">
             Load repository
-          </div>
+          </p>
           <div className="flex flex-col space-y-4">
             <div className="relative mx-auto w-full">
               <input
