@@ -1,0 +1,10 @@
+version: '3.8'
+services:
+  web:
+    build: .
+    ports:
+      - "8005:8000"
+    volumes:
+      - ./src:/app/src # Mount the src directory for live reloading
+    env_file:
+      - .env # Pass environment variables from .env file
