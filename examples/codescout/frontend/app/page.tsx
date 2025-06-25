@@ -1,13 +1,13 @@
 'use client'
 
-import { useState, useEffect } from 'react'
-import { DuckyIndex } from '@/types/ducky'
-import { ChatWindow } from '@/components/ChatWindow'
-import { getIndexes } from '@/services'
 import { AnalyzeBox } from '@/components/AnalyzeBox'
+import { ChatWindow } from '@/components/ChatWindow'
 import { RecentDocuments } from '@/components/RecentDocuments'
-import { AnimatePresence, motion } from 'framer-motion'
+import { getIndexes } from '@/services'
+import { DuckyIndex } from '@/types/ducky'
 import { XMarkIcon } from '@heroicons/react/24/outline'
+import { AnimatePresence, motion } from 'framer-motion'
+import { useEffect, useState } from 'react'
 
 export default function Home() {
   const [isSubmitted, setIsSubmitted] = useState(false)
@@ -46,24 +46,13 @@ export default function Home() {
 
   return (
     <main className="relative h-[100dvh] overflow-hidden bg-black flex flex-col">
-      <div className="safe-area-inset-top mt-2 flex justify-center md:hidden">
-        <a
-          href="https://www.ducky.ai"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-sm text-[var(--gray)] transition-colors duration-[240ms] hover:text-white"
-        >
-          Built with Ducky
-        </a>
-      </div>
       {/* Show indexes on mobile as horizontal scroll */}
-
-      <div className="relative md:hidden px-4 py-2">
+      <div className="relative md:hidden px-4 py-6 min-h-12 flex items-center">
         {/* Fixed right-side blur overlay */}
-        <div className="pointer-events-none absolute right-0 top-2 bottom-2 w-12 z-10 bg-[linear-gradient(270deg,_rgba(0,0,0,0.7)_0%,_rgba(0,0,0,0)_100%)] backdrop-blur-[2.5px]" />
+        <div className="pointer-events-none absolute right-0 top-2 bottom-2 w-12 z-10 gradient-mask" />
 
         {/* Scrollable indexes */}
-        <div className="flex flex-row gap-4 overflow-x-scroll">
+        <div className="flex flex-row gap-4 overflow-x-scroll pr-12">
           {allIndexes.map((index) => (
             <div
               onClick={() => {
@@ -71,7 +60,7 @@ export default function Home() {
                 setIsSubmitted(true)
               }}
               key={index.index_name}
-              className={`min-w-fit cursor-pointer ${
+              className={`min-w-fit cursor-pointer font-medium text-lg ${
                 selectedIndex === index.index_name
                   ? 'text-[var(--blue)]'
                   : 'text-[var(--gray)]'
@@ -135,7 +124,7 @@ export default function Home() {
               stiffness: 400,
               damping: 40,
               mass: 1,
-              type: 'spring',
+              type: 'spring'
             }}
           >
             <XMarkIcon
