@@ -66,7 +66,7 @@ export function AnalyzeBox({
       {/* Built with Ducky link at the top for md+ */}
       <div className="hidden justify-end md:flex">
         <a
-          href="https://www.ducky.ai"
+          href="https://ducky.ai?utm_source=gallery-demo&utm_medium=link-gallery-live-example&utm_campaign=gallery&utm_content=code-scout"
           target="_blank"
           rel="noopener noreferrer"
           className="text-sm text-[var(--gray)] transition-colors duration-[240ms] hover:text-white font-medium"
