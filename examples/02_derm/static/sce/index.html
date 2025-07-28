@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SCE Quick Quiz</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-900 p-4">
+  <div class="max-w-md mx-auto">
+    <h1 class="text-2xl font-bold mb-4 text-center">SCE Quick Quiz</h1>
+
+    <!-- Settings Panel -->
+    <div class="bg-white rounded-lg p-4 mb-6 shadow-sm border">
+      <h2 class="text-lg font-semibold mb-3">Question Set</h2>
+      <div class="space-y-2">
+        <label class="flex items-center">
+          <input type="radio" name="question_set" value="genetic" class="mr-2" checked>
+          <span>Genetic Diseases <span id="genetic-count" class="text-gray-500"></span></span>
+        </label>
+        <label class="flex items-center">
+          <input type="radio" name="question_set" value="original" class="mr-2">
+          <span>Original Dermatology <span id="original-count" class="text-gray-500"></span></span>
+        </label>
+      </div>
+      <div id="loading-indicator" class="hidden mt-2 text-sm text-blue-600">Loading questions...</div>
+    </div>
+
+    <!-- Progress Bar -->
+    <div class="bg-white rounded-lg p-4 mb-6 shadow-sm border">
+      <div class="flex justify-between mb-2">
+        <span class="text-sm font-medium">Progress</span>
+        <span class="text-sm text-gray-500" id="progress-text">0/0 Completed</span>
+      </div>
+      <div class="w-full bg-gray-200 rounded-full h-2.5">
+        <div class="bg-blue-600 h-2.5 rounded-full" id="progress-bar" style="width: 0%"></div>
+      </div>
+    </div>
+
+    <div id="quiz-container" class="space-y-4"></div>
+    <div id="explanation" class="mt-4 text-base text-gray-700"></div>
+
+    <div class="flex gap-2 mt-6">
+      <button id="start-over-btn" class="flex-1 bg-gray-400 text-white py-2 rounded">Start Over</button>
+      <button id="skip-btn" class="flex-1 bg-gray-400 text-white py-2 rounded">Skip</button>
+      <button id="next-btn" class="flex-1 bg-blue-600 text-white py-2 rounded hidden">Next</button>
+    </div>
+  </div>
+
+  <script>
+    let questions = []
+    let current = 0
+    let selected = false
+    let currentQuestionSet = 'genetic'
+    let completedQuestions = new Set() // Track completed questions locally
+    let sessionId = null // Store session ID
+
+    const container      = document.getElementById("quiz-container")
+    const explanationDiv = document.getElementById("explanation")
+    const nextBtn        = document.getElementById("next-btn")
+    const skipBtn        = document.getElementById("skip-btn")
+    const startOverBtn   = document.getElementById("start-over-btn")
+    const loadingIndicator = document.getElementById("loading-indicator")
+    const geneticCountSpan = document.getElementById("genetic-count")
+    const originalCountSpan = document.getElementById("original-count")
+    const progressBar    = document.getElementById("progress-bar")
+    const progressText   = document.getElementById("progress-text")
+
+    // Generate a random session ID
+    function generateSessionId() {
+      return Math.random().toString(36).substring(2) + Date.now().toString(36);
+    }
+
+    // Fisher-Yates shuffle
+    function shuffle(arr) {
+      for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+    }
+
+    function updateProgress() {
+      const completed = completedQuestions.size
+      const total = questions.length
+      const percentage = total > 0 ? (completed / total) * 100 : 0
+      progressBar.style.width = `${percentage}%`
+      progressText.textContent = `${completed}/${total} Completed`
+    }
+
+    async function loadQuestions(questionSet = currentQuestionSet) {
+      try {
+        loadingIndicator.classList.remove("hidden");
+        
+        // Create new session if none exists
+        if (!sessionId) {
+          sessionId = generateSessionId();
+        }
+        
+        const res = await fetch(`/sce/api/questions?question_set=${questionSet}&session_id=${sessionId}`);
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        
+        questions = await res.json();
+        current = 0;
+        currentQuestionSet = questionSet;
+        
+        // Save preference
+        localStorage.setItem('questionSet', questionSet);
+        
+        // Update question counts
+        updateQuestionCounts();
+        updateProgress();
+        
+        showQuestion();
+      } catch (error) {
+        console.error('Failed to load questions:', error);
+        container.innerHTML = `<p class="text-red-600">Failed to load questions. Please try again.</p>`;
+      } finally {
+        loadingIndicator.classList.add("hidden");
+      }
+    }
+
+    async function updateQuestionCounts() {
+      try {
+        // Load genetic questions count
+        const geneticRes = await fetch("/sce/api/questions?question_set=genetic");
+        if (geneticRes.ok) {
+          const geneticQuestions = await geneticRes.json();
+          geneticCountSpan.textContent = `(${geneticQuestions.length} questions)`;
+        }
+        
+        // Load original questions count  
+        const originalRes = await fetch("/sce/api/questions?question_set=original");
+        if (originalRes.ok) {
+          const originalQuestions = await originalRes.json();
+          originalCountSpan.textContent = `(${originalQuestions.length} questions)`;
+        }
+      } catch (error) {
+        console.warn('Could not load question counts:', error);
+      }
+    }
+
+    async function markQuestionComplete(questionId) {
+      try {
+        const response = await fetch('/sce/api/complete-question', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            session_id: sessionId,
+            question_set: currentQuestionSet,
+            question_id: questionId
+          })
+        });
+        
+        if (!response.ok) {
+          throw new Error('Failed to mark question as complete');
+        }
+        
+        completedQuestions.add(questionId);
+        updateProgress();
+      } catch (error) {
+        console.error('Error marking question complete:', error);
+      }
+    }
+
+    function showQuestion() {
+      if (current >= questions.length) return finish();
+
+      selected = false;
+      explanationDiv.textContent = "";
+      nextBtn.classList.add("hidden");
+      skipBtn.classList.remove("hidden");
+
+      const q = questions[current];
+      container.innerHTML = `
+        <p class="text-lg leading-relaxed">${q.question}</p>
+        <div class="mt-2 space-y-2">
+          ${q.choices.map((choice, idx) => `
+            <button class="w-full text-left px-4 py-2 bg-white rounded border hover:bg-blue-100" data-index="${idx}">
+              ${choice}
+            </button>
+          `).join("")}
+        </div>
+      `;
+
+      container.querySelectorAll("button").forEach(btn => {
+        btn.addEventListener("click", () => {
+          if (selected) return;
+          selected = true;
+
+          const idx     = Number(btn.dataset.index);
+          const correct = q.correct;
+
+          container.querySelectorAll("button").forEach((b, i) => {
+            b.classList.remove("bg-green-200","bg-red-200");
+            if (i === correct) b.classList.add("bg-green-200");
+            else if (i === idx) b.classList.add("bg-red-200");
+          });
+
+          // Mark question as completed when answered (not skipped)
+          markQuestionComplete(q.id);
+
+          explanationDiv.textContent = q.explanation;
+          skipBtn.classList.add("hidden");
+          nextBtn.classList.remove("hidden");
+        });
+      });
+    }
+
+    function advance() {
+      current++;
+      showQuestion();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function finish() {
+      container.innerHTML = `<p class="text-center font-bold text-green-700">Done! 🎉</p>`;
+      explanationDiv.textContent = "";
+      nextBtn.classList.add("hidden");
+      skipBtn.classList.add("hidden");
+    }
+
+    async function startOver() {
+      try {
+        // Reset completion status on server
+        const response = await fetch('/sce/api/reset-completion', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            session_id: sessionId,
+            question_set: currentQuestionSet
+          })
+        });
+        
+        if (!response.ok) {
+          throw new Error('Failed to reset completion status');
+        }
+        
+        // Clear local completion tracking
+        completedQuestions.clear();
+        
+        // Generate new session ID to start fresh
+        sessionId = generateSessionId();
+        
+        // Reload questions with new session
+        await loadQuestions(currentQuestionSet);
+        
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      } catch (error) {
+        console.error('Error resetting quiz:', error);
+      }
+    }
+
+    nextBtn.addEventListener("click", advance);
+    skipBtn.addEventListener("click", advance);
+    startOverBtn.addEventListener("click", startOver);
+
+    // Settings event listeners
+    document.querySelectorAll('input[name="question_set"]').forEach(radio => {
+      radio.addEventListener('change', (e) => {
+        if (e.target.checked) {
+          loadQuestions(e.target.value);
+        }
+      });
+    });
+
+    // Initialize
+    async function init() {
+      // Generate initial session ID
+      sessionId = generateSessionId();
+      
+      // Load saved preference
+      const savedQuestionSet = localStorage.getItem('questionSet') || 'genetic';
+      currentQuestionSet = savedQuestionSet;
+      
+      // Update radio button
+      document.querySelector(`input[value="${savedQuestionSet}"]`).checked = true;
+      
+      // Load question counts first
+      await updateQuestionCounts();
+      
+      // Load questions
+      await loadQuestions(savedQuestionSet);
+    }
+
+    init();
+  </script>
+</body>
+</html>
