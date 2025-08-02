@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MedQuest - Login</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen flex items-center justify-center p-4">
+  <div class="max-w-md w-full">
+    <!-- Logo/Header -->
+    <div class="text-center mb-8">
+      <h1 class="text-3xl font-bold text-gray-900 mb-2">🧬 MedQuest</h1>
+      <p class="text-gray-600">Medical Knowledge Assessment Platform</p>
+    </div>
+
+    <!-- Auth Card -->
+    <div class="bg-white rounded-lg shadow-lg p-6">
+      <!-- Tab Navigation -->
+      <div class="flex mb-6 bg-gray-100 rounded-lg p-1">
+        <button id="login-tab" class="flex-1 py-2 px-4 rounded-md text-sm font-medium transition-all duration-200 bg-white text-blue-600 shadow-sm">
+          Sign In
+        </button>
+        <button id="signup-tab" class="flex-1 py-2 px-4 rounded-md text-sm font-medium transition-all duration-200 text-gray-500 hover:text-gray-700">
+          Sign Up
+        </button>
+      </div>
+
+      <!-- Login Form -->
+      <form id="login-form" class="space-y-4">
+        <div>
+          <label for="login-email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+          <input type="email" id="login-email" required 
+                 class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                 placeholder="your.email@example.com">
+        </div>
+        <div>
+          <label for="login-password" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+          <input type="password" id="login-password" required 
+                 class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                 placeholder="Your password">
+        </div>
+        <button type="submit" id="login-btn"
+                class="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors duration-200">
+          Sign In
+        </button>
+      </form>
+
+      <!-- Signup Form -->
+      <form id="signup-form" class="space-y-4 hidden">
+        <div>
+          <label for="signup-email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+          <input type="email" id="signup-email" required 
+                 class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                 placeholder="your.email@example.com"
+                 pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$">
+          <p class="text-xs text-gray-500 mt-1">Must be a valid email address</p>
+        </div>
+        <div>
+          <label for="signup-password" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+          <input type="password" id="signup-password" required minlength="8"
+                 class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                 placeholder="Create a strong password"
+                 pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$">
+          <div class="mt-1">
+            <div class="flex items-center">
+              <div class="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden">
+                <div id="password-strength-bar" class="h-full bg-red-500 transition-all duration-300" style="width: 0%"></div>
+              </div>
+              <span id="password-strength-text" class="ml-2 text-xs font-medium">Weak</span>
+            </div>
+            <p class="text-xs text-gray-500 mt-1">Must be at least 8 characters with 1 letter, 1 number, and 1 special character</p>
+          </div>
+        </div>
+        <div>
+          <label for="signup-confirm-password" class="block text-sm font-medium text-gray-700 mb-1">Confirm Password</label>
+          <input type="password" id="signup-confirm-password" required minlength="8"
+                 class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                 placeholder="Confirm your password">
+        </div>
+        <button type="submit" id="signup-btn"
+                class="w-full bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-colors duration-200">
+          Create Account
+        </button>
+      </form>
+
+      <!-- Loading State -->
+      <div id="loading" class="hidden text-center py-4">
+        <div class="inline-block animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600"></div>
+        <p class="text-gray-600 mt-2">Processing...</p>
+      </div>
+
+      <!-- Error Message -->
+      <div id="error-message" class="hidden mt-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded-md">
+        <p id="error-text"></p>
+      </div>
+
+      <!-- Success Message -->
+      <div id="success-message" class="hidden mt-4 p-3 bg-green-100 border border-green-400 text-green-700 rounded-md">
+        <p id="success-text"></p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Initialize Supabase client
+    let supabase;
+
+    // Initialize the app when page loads
+    async function initializeAuth() {
+      try {
+        // Get Supabase config from backend
+        const configResponse = await fetch('/api/config');
+        if (!configResponse.ok) {
+          throw new Error('Failed to load configuration');
+        }
+        
+        const config = await configResponse.json();
+        
+        // Initialize Supabase client
+        supabase = window.supabase.createClient(config.supabaseUrl, config.supabaseAnonKey);
+        
+        // Check if user is already logged in
+        const { data: { user } } = await supabase.auth.getUser();
+        if (user) {
+          // User is already authenticated, redirect to main app
+          window.location.href = '/sce';
+        }
+      } catch (error) {
+        console.error('Initialization error:', error);
+        showError('Failed to initialize authentication. Please refresh the page.');
+      }
+    }
+
+    // DOM elements
+    const loginTab = document.getElementById('login-tab');
+    const signupTab = document.getElementById('signup-tab');
+    const loginForm = document.getElementById('login-form');
+    const signupForm = document.getElementById('signup-form');
+    const loading = document.getElementById('loading');
+    const errorMessage = document.getElementById('error-message');
+    const successMessage = document.getElementById('success-message');
+    const errorText = document.getElementById('error-text');
+    const successText = document.getElementById('success-text');
+    const passwordInput = document.getElementById('signup-password');
+    const passwordStrengthBar = document.getElementById('password-strength-bar');
+    const passwordStrengthText = document.getElementById('password-strength-text');
+
+    // Tab switching
+    loginTab.addEventListener('click', () => {
+      switchTab('login');
+    });
+
+    signupTab.addEventListener('click', () => {
+      switchTab('signup');
+    });
+
+    function switchTab(tab) {
+      if (tab === 'login') {
+        loginTab.className = "flex-1 py-2 px-4 rounded-md text-sm font-medium transition-all duration-200 bg-white text-blue-600 shadow-sm";
+        signupTab.className = "flex-1 py-2 px-4 rounded-md text-sm font-medium transition-all duration-200 text-gray-500 hover:text-gray-700";
+        loginForm.classList.remove('hidden');
+        signupForm.classList.add('hidden');
+      } else {
+        signupTab.className = "flex-1 py-2 px-4 rounded-md text-sm font-medium transition-all duration-200 bg-white text-green-600 shadow-sm";
+        loginTab.className = "flex-1 py-2 px-4 rounded-md text-sm font-medium transition-all duration-200 text-gray-500 hover:text-gray-700";
+        signupForm.classList.remove('hidden');
+        loginForm.classList.add('hidden');
+      }
+      hideMessages();
+    }
+
+    // Form submissions
+    loginForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = document.getElementById('login-email').value;
+      const password = document.getElementById('login-password').value;
+      await handleLogin(email, password);
+    });
+
+    signupForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = document.getElementById('signup-email').value;
+      const password = document.getElementById('signup-password').value;
+      const confirmPassword = document.getElementById('signup-confirm-password').value;
+      
+      // Validate email format
+      const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+      if (!emailRegex.test(email)) {
+        showError('Please enter a valid email address');
+        return;
+      }
+      
+      // Validate password strength
+      const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
+      if (!passwordRegex.test(password)) {
+        showError('Password must be at least 8 characters and include at least 1 letter, 1 number, and 1 special character');
+        return;
+      }
+      
+      // Check if passwords match
+      if (password !== confirmPassword) {
+        showError('Passwords do not match');
+        return;
+      }
+      
+      await handleSignup(email, password);
+    });
+
+    // Authentication functions
+    async function handleLogin(email, password) {
+      showLoading();
+      hideMessages();
+
+      try {
+        const { data, error } = await supabase.auth.signInWithPassword({
+          email: email,
+          password: password,
+        });
+
+        if (error) throw error;
+
+        // Store the session token
+        if (data.session) {
+          localStorage.setItem('supabase_token', data.session.access_token);
+          showSuccess('Login successful! Redirecting...');
+          setTimeout(() => {
+            window.location.href = '/sce';
+          }, 1500);
+        }
+      } catch (error) {
+        console.error('Login error:', error);
+        showError(error.message);
+      } finally {
+        hideLoading();
+      }
+    }
+
+    async function handleSignup(email, password) {
+      showLoading();
+      hideMessages();
+
+      try {
+        const { data, error } = await supabase.auth.signUp({
+          email: email,
+          password: password,
+        });
+
+        if (error) throw error;
+
+        if (data.user && !data.session) {
+          // Email confirmation required
+          showSuccess('Please check your email to confirm your account before logging in.');
+          setTimeout(() => {
+            switchTab('login');
+          }, 3000);
+        } else if (data.session) {
+          // Auto-login after signup
+          localStorage.setItem('supabase_token', data.session.access_token);
+          showSuccess('Account created successfully! Redirecting...');
+          setTimeout(() => {
+            window.location.href = '/sce';
+          }, 1500);
+        }
+      } catch (error) {
+        console.error('Signup error:', error);
+        showError(error.message);
+      } finally {
+        hideLoading();
+      }
+    }
+
+    // UI helper functions
+    function showLoading() {
+      loading.classList.remove('hidden');
+      loginForm.classList.add('hidden');
+      signupForm.classList.add('hidden');
+    }
+
+    function hideLoading() {
+      loading.classList.add('hidden');
+      if (loginTab.classList.contains('bg-white')) {
+        loginForm.classList.remove('hidden');
+      } else {
+        signupForm.classList.remove('hidden');
+      }
+    }
+
+    function showError(message) {
+      errorText.textContent = message;
+      errorMessage.classList.remove('hidden');
+      successMessage.classList.add('hidden');
+    }
+
+    function showSuccess(message) {
+      successText.textContent = message;
+      successMessage.classList.remove('hidden');
+      errorMessage.classList.add('hidden');
+    }
+
+    function hideMessages() {
+      errorMessage.classList.add('hidden');
+      successMessage.classList.add('hidden');
+    }
+
+    // Password strength checker
+    passwordInput.addEventListener('input', updatePasswordStrength);
+    
+    function updatePasswordStrength() {
+      const password = passwordInput.value;
+      let strength = 0;
+      let feedback = 'Weak';
+      let color = 'bg-red-500';
+      
+      // Length check
+      if (password.length >= 8) {
+        strength += 25;
+      }
+      
+      // Contains letter check
+      if (/[A-Za-z]/.test(password)) {
+        strength += 25;
+      }
+      
+      // Contains number check
+      if (/\d/.test(password)) {
+        strength += 25;
+      }
+      
+      // Contains special character check
+      if (/[@$!%*#?&]/.test(password)) {
+        strength += 25;
+      }
+      
+      // Update strength indicator
+      if (strength <= 25) {
+        feedback = 'Weak';
+        color = 'bg-red-500';
+      } else if (strength <= 50) {
+        feedback = 'Fair';
+        color = 'bg-orange-500';
+      } else if (strength <= 75) {
+        feedback = 'Good';
+        color = 'bg-yellow-500';
+      } else {
+        feedback = 'Strong';
+        color = 'bg-green-500';
+      }
+      
+      // Update UI
+      passwordStrengthBar.style.width = `${strength}%`;
+      passwordStrengthBar.className = `h-full ${color} transition-all duration-300`;
+      passwordStrengthText.textContent = feedback;
+    }
+    
+    // Initialize when page loads
+    document.addEventListener('DOMContentLoaded', initializeAuth);
+  </script>
+</body>
+</html>

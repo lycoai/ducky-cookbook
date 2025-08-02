@@ -5,10 +5,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SCE Quick Quiz</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
 </head>
 <body class="bg-gray-100 text-gray-900 p-4">
   <div class="max-w-md mx-auto">
-    <h1 class="text-2xl font-bold mb-4 text-center">SCE Quick Quiz</h1>
+    <!-- User Info and Logout -->
+    <div class="bg-white rounded-lg p-4 mb-4 shadow-sm border flex justify-between items-center">
+      <div>
+        <h1 class="text-xl font-bold text-gray-900">🧬 MedQuest</h1>
+        <p class="text-sm text-gray-600" id="user-info">Loading user...</p>
+      </div>
+      <button id="logout-btn" class="px-3 py-1 bg-red-500 text-white rounded text-sm hover:bg-red-600 transition-colors">
+        Logout
+      </button>
+    </div>
 
     <!-- Settings Panel -->
     <div class="bg-white rounded-lg p-4 mb-6 shadow-sm border">
@@ -53,7 +63,9 @@
     let selected = false
     let currentQuestionSet = 'genetic'
     let completedQuestions = new Set() // Track completed questions locally
-    let sessionId = null // Store session ID
+    let authToken = null // Store auth token
+    let supabase = null // Supabase client
+    let currentUser = null // Current user info
 
     const container      = document.getElementById("quiz-container")
     const explanationDiv = document.getElementById("explanation")
@@ -65,10 +77,120 @@
     const originalCountSpan = document.getElementById("original-count")
     const progressBar    = document.getElementById("progress-bar")
     const progressText   = document.getElementById("progress-text")
+    const userInfo       = document.getElementById("user-info")
+    const logoutBtn      = document.getElementById("logout-btn")
 
-    // Generate a random session ID
-    function generateSessionId() {
-      return Math.random().toString(36).substring(2) + Date.now().toString(36);
+    // Authentication and initialization
+    async function initializeApp() {
+      try {
+        // Get Supabase config
+        const configResponse = await fetch('/api/config');
+        if (!configResponse.ok) {
+          throw new Error('Failed to load configuration');
+        }
+        
+        const config = await configResponse.json();
+        supabase = window.supabase.createClient(config.supabaseUrl, config.supabaseAnonKey);
+        
+        // Check authentication
+        const { data: { user } } = await supabase.auth.getUser();
+        if (!user) {
+          // User not authenticated, redirect to login
+          window.location.href = '/auth';
+          return;
+        }
+        
+        // Get the current session token
+        const { data: { session } } = await supabase.auth.getSession();
+        if (!session) {
+          window.location.href = '/auth';
+          return;
+        }
+        
+        authToken = session.access_token;
+        currentUser = user;
+        
+        // Load user info
+        await loadUserInfo();
+        
+        // Initialize quiz
+        await initializeQuiz();
+        
+      } catch (error) {
+        console.error('Initialization error:', error);
+        alert('Failed to initialize app. Redirecting to login...');
+        window.location.href = '/auth';
+      }
+    }
+
+    async function loadUserInfo() {
+      try {
+        const response = await fetch('/api/user', {
+          headers: {
+            'Authorization': `Bearer ${authToken}`
+          }
+        });
+        
+        if (response.ok) {
+          const userData = await response.json();
+          userInfo.textContent = `User: ${currentUser.email} | Genetic: ${userData.stats.genetic_completed} | Original: ${userData.stats.original_completed}`;
+        } else {
+          userInfo.textContent = `User: ${currentUser.email}`;
+        }
+      } catch (error) {
+        console.error('Error loading user info:', error);
+        userInfo.textContent = `User: ${currentUser.email}`;
+      }
+    }
+
+    async function handleLogout() {
+      try {
+        await supabase.auth.signOut();
+        localStorage.removeItem('supabase_token');
+        window.location.href = '/auth';
+      } catch (error) {
+        console.error('Logout error:', error);
+        // Force redirect even if logout fails
+        localStorage.removeItem('supabase_token');
+        window.location.href = '/auth';
+      }
+    }
+
+    // Make authenticated API calls
+    async function makeAuthenticatedRequest(url, options = {}) {
+      const defaultOptions = {
+        headers: {
+          'Authorization': `Bearer ${authToken}`,
+          'Content-Type': 'application/json',
+          ...options.headers
+        }
+      };
+      
+      const response = await fetch(url, { ...options, ...defaultOptions });
+      
+      if (response.status === 401) {
+        // Token expired or invalid
+        alert('Session expired. Please login again.');
+        window.location.href = '/auth';
+        return null;
+      }
+      
+      return response;
+    }
+
+    async function initializeQuiz() {
+      // Load saved preference
+      const savedQuestionSet = localStorage.getItem('questionSet') || 'genetic';
+      currentQuestionSet = savedQuestionSet;
+      
+      // Update radio button
+      document.querySelector(`input[value="${savedQuestionSet}"]`).checked = true;
+      
+      // Load question counts first
+      await updateQuestionCounts();
+      
+      // Load questions
+      await loadQuestions(savedQuestionSet);
     }
 
     // Fisher-Yates shuffle
@@ -91,13 +213,8 @@
       try {
         loadingIndicator.classList.remove("hidden");
         
-        // Create new session if none exists
-        if (!sessionId) {
-          sessionId = generateSessionId();
-        }
-        
-        const res = await fetch(`/sce/api/questions?question_set=${questionSet}&session_id=${sessionId}`);
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const res = await makeAuthenticatedRequest(`/sce/api/questions?question_set=${questionSet}`);
+        if (!res || !res.ok) throw new Error(`HTTP ${res?.status || 'Network Error'}`);
         
         questions = await res.json();
         current = 0;
@@ -122,15 +239,15 @@
     async function updateQuestionCounts() {
       try {
         // Load genetic questions count
-        const geneticRes = await fetch("/sce/api/questions?question_set=genetic");
-        if (geneticRes.ok) {
+        const geneticRes = await makeAuthenticatedRequest("/sce/api/questions?question_set=genetic");
+        if (geneticRes && geneticRes.ok) {
           const geneticQuestions = await geneticRes.json();
           geneticCountSpan.textContent = `(${geneticQuestions.length} questions)`;
         }
         
         // Load original questions count  
-        const originalRes = await fetch("/sce/api/questions?question_set=original");
-        if (originalRes.ok) {
+        const originalRes = await makeAuthenticatedRequest("/sce/api/questions?question_set=original");
+        if (originalRes && originalRes.ok) {
           const originalQuestions = await originalRes.json();
           originalCountSpan.textContent = `(${originalQuestions.length} questions)`;
         }
@@ -141,24 +258,23 @@
 
     async function markQuestionComplete(questionId) {
       try {
-        const response = await fetch('/sce/api/complete-question', {
+        const response = await makeAuthenticatedRequest('/sce/api/complete-question', {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
           body: JSON.stringify({
-            session_id: sessionId,
             question_set: currentQuestionSet,
             question_id: questionId
           })
         });
         
-        if (!response.ok) {
+        if (!response || !response.ok) {
           throw new Error('Failed to mark question as complete');
         }
         
         completedQuestions.add(questionId);
         updateProgress();
+        
+        // Update user info to reflect new completion count
+        await loadUserInfo();
       } catch (error) {
         console.error('Error marking question complete:', error);
       }
@@ -224,29 +340,25 @@
     async function startOver() {
       try {
         // Reset completion status on server
-        const response = await fetch('/sce/api/reset-completion', {
+        const response = await makeAuthenticatedRequest('/sce/api/reset-completion', {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
           body: JSON.stringify({
-            session_id: sessionId,
             question_set: currentQuestionSet
           })
         });
         
-        if (!response.ok) {
+        if (!response || !response.ok) {
           throw new Error('Failed to reset completion status');
         }
         
         // Clear local completion tracking
         completedQuestions.clear();
         
-        // Generate new session ID to start fresh
-        sessionId = generateSessionId();
-        
-        // Reload questions with new session
+        // Reload questions
         await loadQuestions(currentQuestionSet);
+        
+        // Update user info
+        await loadUserInfo();
         
         window.scrollTo({ top: 0, behavior: "smooth" });
       } catch (error) {
@@ -257,6 +369,7 @@
     nextBtn.addEventListener("click", advance);
     skipBtn.addEventListener("click", advance);
     startOverBtn.addEventListener("click", startOver);
+    logoutBtn.addEventListener("click", handleLogout);
 
     // Settings event listeners
     document.querySelectorAll('input[name="question_set"]').forEach(radio => {
@@ -267,26 +380,8 @@
       });
     });
 
-    // Initialize
-    async function init() {
-      // Generate initial session ID
-      sessionId = generateSessionId();
-      
-      // Load saved preference
-      const savedQuestionSet = localStorage.getItem('questionSet') || 'genetic';
-      currentQuestionSet = savedQuestionSet;
-      
-      // Update radio button
-      document.querySelector(`input[value="${savedQuestionSet}"]`).checked = true;
-      
-      // Load question counts first
-      await updateQuestionCounts();
-      
-      // Load questions
-      await loadQuestions(savedQuestionSet);
-    }
-
-    init();
+    // Initialize when page loads
+    document.addEventListener('DOMContentLoaded', initializeApp);
   </script>
 </body>
 </html>
